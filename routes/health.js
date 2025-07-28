@@ -6,7 +6,7 @@ const router = express.Router();
 // GET /api/health - Health check endpoint (admin only)
 router.get('/', requireAuth, async (req, res) => {
   // Only allow specific admin email addresses
-  const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : ['admin@tocalendar.com'];
+  const adminEmails = process.env.ADMIN_EMAILS ? process.env.ADMIN_EMAILS.split(',') : ['admin@torontoevents.live'];
   
   if (!adminEmails.includes(req.user.email)) {
     return res.status(403).json({ error: 'Access denied' });
