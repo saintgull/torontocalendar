@@ -52,7 +52,8 @@ app.use(cookieParser());
 // Add request logging middleware
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  if (req.body && Object.keys(req.body).length > 0) {
+  // NEVER log passwords or sensitive data
+  if (req.body && Object.keys(req.body).length > 0 && req.url !== '/api/auth/login') {
     console.log('Request body:', JSON.stringify(req.body, null, 2));
   }
   next();
