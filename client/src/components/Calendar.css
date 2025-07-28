@@ -161,51 +161,6 @@
 }
 
 /* Mobile week view styles */
-.mobile-week-view {
-  display: none;
-  background: var(--calendar-bg);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow-medium);
-  border: 2px solid var(--dark-purple);
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background: var(--slate-gray);
-}
-
-.week-day {
-  background: var(--calendar-cell-bg);
-  min-height: 300px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--calendar-cell-border);
-}
-
-.week-day-header {
-  font-weight: 700;
-  margin-bottom: 10px;
-  text-align: center;
-  color: var(--dark-purple);
-  font-size: 0.9rem;
-}
-
-.week-day-date {
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 10px;
-  color: var(--dark-purple);
-}
-
-.week-day.today {
-  background: var(--white-smoke);
-  border: 2px solid var(--auburn);
-}
 
 /* Desktop optimization for larger screens */
 @media (min-width: 1400px) {
@@ -248,12 +203,16 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .calendar-wrapper {
-    padding: 10px;
+    padding: 10px 5px;
+  }
+  
+  .calendar {
+    border-radius: 8px;
   }
   
   .calendar-header {
-    padding: 15px;
-    gap: 10px;
+    padding: 12px;
+    gap: 8px;
   }
   
   .calendar-title {
@@ -261,57 +220,63 @@
   }
   
   .calendar-header h2 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
   
   .nav-button {
-    padding: 10px 14px;
-    font-size: 0.9rem;
-    min-width: 80px;
-    max-width: 80px;
-    width: 80px;
-    height: 38px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    min-width: 40px;
+    max-width: 40px;
+    width: 40px;
+    height: 36px;
   }
   
-  /* Show week view on mobile */
-  .mobile-week-view {
-    display: block;
-  }
-  
-  .week-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .week-day {
-    min-height: auto;
-    padding: 10px;
+  /* Show month view with horizontal scroll on mobile */
+  .calendar-grid {
     display: grid;
-    grid-template-columns: 60px 60px 1fr;
-    gap: 10px;
-    align-items: start;
+    grid-template-columns: repeat(7, minmax(60px, 1fr));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
-  .week-day-header {
+  .day-header {
+    padding: 8px 4px;
+    font-size: 0.7rem;
+    position: sticky;
+    top: 0;
+    background: var(--calendar-header);
+    z-index: 10;
+  }
+  
+  .calendar-day {
+    min-height: 80px;
+    padding: 4px;
+  }
+  
+  .day-number {
     font-size: 0.8rem;
-    margin-bottom: 0;
+    margin-bottom: 4px;
   }
   
-  .week-day-date {
-    font-size: 1rem;
-    margin-bottom: 0;
+  .event-item {
+    padding: 3px 4px;
+    font-size: 0.6rem;
+    border-width: 1px;
   }
   
-  .week-day .day-events {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    max-height: none;
+  .event-title {
+    font-size: 0.6rem;
+    -webkit-line-clamp: 1;
   }
   
-  .week-day.today {
-    background: var(--white-smoke);
+  .event-time {
+    font-size: 0.55rem;
+  }
+  
+  /* Hide download link on mobile */
+  .calendar-title a {
+    display: none;
   }
 }
 
