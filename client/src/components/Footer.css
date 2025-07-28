@@ -1,0 +1,49 @@
+.site-footer {
+  background-color: transparent;
+  color: var(--dark-purple);
+  padding: 20px 0;
+  margin-top: auto;
+  position: relative;
+  z-index: 100;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer-credit {
+  color: var(--dark-purple);
+}
+
+.footer-link {
+  color: var(--auburn);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footer-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.footer-separator {
+  margin: 0 15px;
+  color: var(--dark-purple);
+  opacity: 0.5;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .footer-content {
+    font-size: 0.85rem;
+  }
+  
+  .footer-separator {
+    display: block;
+    margin: 5px 0;
+  }
+}

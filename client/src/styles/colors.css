@@ -1,0 +1,79 @@
+/* Import custom fonts */
+@import url('../assets/fonts/fonts.css');
+
+:root {
+  /* Toronto Events Calendar Color Scheme - High Contrast Palette */
+  --dark-purple: #310a31ff;
+  --slate-gray: #6d8a96ff;
+  --white-smoke: #f5f5f5ff;
+  --paynes-gray: #5d707fff;
+  --poppy: #da2c38ff;
+  --auburn: #a52a2aff;
+  --golden-yellow: #ffd700ff;
+  --danger-red: #dc143cff;
+  --asparagus: #87a96bff;
+  
+  /* Typography */
+  --font-primary: 'MetaAccanthis Alternate', serif; /* For main title */
+  --font-secondary: 'MetaAccanthis', serif; /* For month titles and body text */
+  --font-subheading: 'Cotham', sans-serif; /* For subheadings */
+  --font-body: 'Cotham', sans-serif; /* For all other text */
+  
+  /* Color variations */
+  --dark-purple-light: #4a1449;
+  --dark-purple-dark: #1f0620;
+  --slate-gray-light: #8ca6b2;
+  --slate-gray-dark: #4e6e7a;
+  --paynes-gray-light: #748695;
+  --paynes-gray-dark: #465360;
+  --poppy-light: #e5555f;
+  --poppy-dark: #b8232d;
+  --white-smoke-dark: #e8e8e8;
+  --auburn-light: #c73e3e;
+  --auburn-dark: #7d1f1f;
+  --golden-yellow-light: #ffed4e;
+  --golden-yellow-dark: #d4af37;
+  --danger-red-light: #ff6b6b;
+  --danger-red-dark: #a50e2a;
+  --asparagus-light: #9fbc88;
+  --asparagus-dark: #6f8a51;
+  
+  /* Semantic color assignments */
+  --color-primary: var(--auburn);
+  --color-secondary: var(--slate-gray);
+  --color-accent: var(--paynes-gray);
+  --color-background: var(--white-smoke);
+  --color-text: var(--dark-purple);
+  --color-text-light: #ffffff;
+  
+  /* UI element colors */
+  --color-success: var(--slate-gray);
+  --color-warning: var(--auburn);
+  --color-error: var(--auburn);
+  --color-info: var(--paynes-gray);
+  
+  /* Component colors */
+  --header-text: var(--auburn);
+  --header-bg: transparent;
+  --calendar-bg: var(--slate-gray-light);
+  --calendar-cell-bg: var(--white-smoke);
+  --calendar-cell-border: var(--dark-purple);
+  --calendar-header: var(--paynes-gray);
+  --calendar-header-text: var(--color-text-light);
+  --calendar-today: var(--auburn);
+  
+  /* Form colors */
+  --input-border: var(--slate-gray);
+  --input-focus: var(--auburn);
+  --button-primary-bg: var(--dark-purple);
+  --button-primary-text: var(--color-text-light);
+  --button-secondary-bg: var(--paynes-gray);
+  --button-secondary-text: var(--color-text-light);
+  --button-outline-border: var(--dark-purple);
+  --button-outline-text: var(--color-text-light);
+  
+  /* Shadows and effects */
+  --shadow-light: 0 2px 4px rgba(49, 10, 49, 0.1);
+  --shadow-medium: 0 4px 8px rgba(49, 10, 49, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(49, 10, 49, 0.2);
+}

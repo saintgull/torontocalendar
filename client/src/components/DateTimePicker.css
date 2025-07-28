@@ -1,0 +1,81 @@
+.datetime-picker {
+  margin-bottom: 20px;
+}
+
+.datetime-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.required {
+  color: var(--hot-pink);
+}
+
+.datetime-inputs {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.date-input-wrapper,
+.time-input-wrapper {
+  flex: 1;
+  min-width: 150px;
+}
+
+.date-input,
+.time-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--white-smoke);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.date-input:focus,
+.time-input:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(94, 43, 255, 0.1);
+}
+
+.date-input:disabled,
+.time-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+/* Style the native date/time picker icons */
+.date-input::-webkit-calendar-picker-indicator,
+.time-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+  filter: invert(50%);
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover,
+.time-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .datetime-inputs {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .date-input-wrapper,
+  .time-input-wrapper {
+    width: 100%;
+  }
+}

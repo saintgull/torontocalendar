@@ -1,0 +1,25 @@
+/* MetaAccanthis Fonts */
+@font-face {
+  font-family: 'MetaAccanthis';
+  src: url('./MetaAccanthis_regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MetaAccanthis Alternate';
+  src: url('./MetaAccanthisAlternate.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cotham Font */
+@font-face {
+  font-family: 'Cotham';
+  src: url('./CothamSans.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
