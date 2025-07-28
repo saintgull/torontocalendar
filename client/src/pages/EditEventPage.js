@@ -25,17 +25,6 @@ const EditEventPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  useEffect(() => {
-    // Wait for auth to finish loading before checking user
-    if (authLoading) return;
-    
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-    fetchEvent();
-  }, [user, authLoading, navigate, id, fetchEvent]);
-
   const fetchEvent = useCallback(async () => {
     try {
       const response = await fetch(`/api/events/${id}`);
@@ -79,6 +68,17 @@ const EditEventPage = () => {
       setEventLoading(false);
     }
   }, [id, user]);
+
+  useEffect(() => {
+    // Wait for auth to finish loading before checking user
+    if (authLoading) return;
+    
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    fetchEvent();
+  }, [user, authLoading, navigate, id, fetchEvent]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

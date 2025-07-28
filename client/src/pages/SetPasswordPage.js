@@ -14,15 +14,6 @@ const SetPasswordPage = () => {
   
   const token = searchParams.get('token');
 
-  useEffect(() => {
-    if (!token) {
-      setError('No invite token provided');
-      return;
-    }
-    
-    verifyToken();
-  }, [token, verifyToken]);
-
   const verifyToken = useCallback(async () => {
     try {
       const response = await fetch(`/api/invite/verify/${token}`);
@@ -38,6 +29,15 @@ const SetPasswordPage = () => {
       setError('Network error. Please try again.');
     }
   }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      setError('No invite token provided');
+      return;
+    }
+    
+    verifyToken();
+  }, [token, verifyToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
