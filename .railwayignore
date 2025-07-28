@@ -1,0 +1,19 @@
+# Ignore client folder for backend deployment
+client/
+client.log
+
+# Development files
+*.log
+.env.local
+.env.development
+
+# Testing
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
