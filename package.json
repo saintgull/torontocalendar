@@ -1,0 +1,36 @@
+{
+  "name": "tocalendar",
+  "version": "1.0.0",
+  "description": "Toronto Events Calendar Web App",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "cd client && npm run build",
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev:full": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "ical": "^0.8.0",
+    "ics": "^3.7.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "nodemailer": "^6.9.7",
+    "pg": "^8.11.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  }
+}
