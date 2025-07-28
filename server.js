@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://torontoevents.live', 'https://www.torontoevents.live'] 
+    ? ['https://torontoevents.live', 'https://www.torontoevents.live', 'https://torontocalendar.netlify.app'] 
     : ['http://localhost:3000'],
   credentials: true
 }));
