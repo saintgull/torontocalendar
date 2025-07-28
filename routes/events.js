@@ -201,7 +201,12 @@ router.post('/',
           }
           
           // Format recurrence rule
-          const recurrenceRule = `FREQ=${recurrence_type.toUpperCase()}`;
+          let recurrenceRule;
+          if (recurrence_type === 'biweekly') {
+            recurrenceRule = 'FREQ=WEEKLY;INTERVAL=2';
+          } else {
+            recurrenceRule = `FREQ=${recurrence_type.toUpperCase()}`;
+          }
           
           query = `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_recurring, recurrence_rule, recurrence_end_date, color)
                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)

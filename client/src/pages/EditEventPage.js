@@ -43,6 +43,7 @@ const EditEventPage = () => {
         let recurrenceType = 'weekly';
         if (event.recurrence_rule) {
           if (event.recurrence_rule.includes('DAILY')) recurrenceType = 'daily';
+          else if (event.recurrence_rule.includes('WEEKLY;INTERVAL=2')) recurrenceType = 'biweekly';
           else if (event.recurrence_rule.includes('WEEKLY')) recurrenceType = 'weekly';
           else if (event.recurrence_rule.includes('MONTHLY')) recurrenceType = 'monthly';
         }
@@ -300,6 +301,7 @@ const EditEventPage = () => {
                 >
                   <option value="daily">Daily</option>
                   <option value="weekly">Weekly</option>
+                  <option value="biweekly">Biweekly</option>
                   <option value="monthly">Monthly</option>
                 </select>
               </div>

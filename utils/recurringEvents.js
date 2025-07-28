@@ -17,6 +17,9 @@ function generateRecurringDates(startDate, endDate, recurrenceType, maxOccurrenc
       case 'weekly':
         current.setDate(current.getDate() + 7);
         break;
+      case 'biweekly':
+        current.setDate(current.getDate() + 14);
+        break;
       case 'monthly':
         current.setMonth(current.getMonth() + 1);
         break;
@@ -37,6 +40,7 @@ function formatRecurrenceRule(recurrenceType, endDate) {
   const rules = {
     daily: 'FREQ=DAILY',
     weekly: 'FREQ=WEEKLY',
+    biweekly: 'FREQ=WEEKLY;INTERVAL=2',
     monthly: 'FREQ=MONTHLY'
   };
   
@@ -61,6 +65,8 @@ function getRecurrenceDescription(recurrenceRule, recurrenceEndDate) {
   
   if (recurrenceRule.includes('DAILY')) {
     description = 'Daily';
+  } else if (recurrenceRule.includes('WEEKLY;INTERVAL=2')) {
+    description = 'Biweekly';
   } else if (recurrenceRule.includes('WEEKLY')) {
     description = 'Weekly';
   } else if (recurrenceRule.includes('MONTHLY')) {
