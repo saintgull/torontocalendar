@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import EventModal from './EventModal';
 // eslint-disable-next-line no-unused-vars
 import { getContrastTextColor, getDarkerColor } from '../utils/colorContrast';
+import config from '../config';
 import './Calendar.css';
 
 const Calendar = () => {
@@ -20,7 +21,7 @@ const Calendar = () => {
   const fetchEvents = async () => {
     try {
       console.log('Fetching events from /api/events...');
-      const response = await fetch('/api/events');
+      const response = await fetch(`${config.API_BASE_URL}/api/events`);
       console.log('Response status:', response.status);
       if (response.ok) {
         const data = await response.json();
