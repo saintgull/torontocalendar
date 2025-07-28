@@ -63,14 +63,14 @@ app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/ics', require('./routes/ics'));
 app.use('/api/submit-event', require('./routes/submitEvent'));
 
-// Serve static files from React build
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// API-only backend - frontend served separately by Netlify
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Toronto Calendar API', 
+    status: 'running',
+    timestamp: new Date().toISOString()
   });
-}
+});
 
 // Import centralized error handler
 const { errorHandler } = require('./middleware/errorHandler');
