@@ -71,25 +71,6 @@ const Calendar = () => {
     });
   };
 
-  const getEventsForFullDate = (date) => {
-    const targetDateString = date.toISOString().split('T')[0];
-    
-    const dayEvents = events.filter(event => {
-      const startDateString = event.event_date.split('T')[0];
-      
-      // For single-day events
-      if (!event.end_date) {
-        return startDateString === targetDateString;
-      }
-      
-      // For multi-day events, check if target date is within range
-      const endDateString = event.end_date.split('T')[0];
-      return targetDateString >= startDateString && targetDateString <= endDateString;
-    });
-    
-    return dayEvents;
-  };
-
   const getEventsForDate = (day) => {
     if (!day) return [];
     
