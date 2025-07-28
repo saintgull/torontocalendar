@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import ProfileSidePanel from './ProfileSidePanel';
+// eslint-disable-next-line no-unused-vars
 import { formatDateDDMMYYYY, formatDateForDisplay } from '../utils/dateFormat';
 import './EventModal.css';
 

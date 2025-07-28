@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { formatDateDDMMYYYY } from '../utils/dateFormat';
 import './ProfileSidePanel.css';
 
@@ -7,13 +7,7 @@ const ProfileSidePanel = ({ userId, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (userId) {
-      fetchProfile();
-    }
-  }, [userId]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const response = await fetch(`/api/profiles/${userId}`);
       
@@ -28,7 +22,13 @@ const ProfileSidePanel = ({ userId, onClose }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchProfile();
+    }
+  }, [userId, fetchProfile]);
 
   const formatDate = (dateString) => {
     return formatDateDDMMYYYY(dateString);

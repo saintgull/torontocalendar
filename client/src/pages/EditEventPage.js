@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import DateTimePicker from '../components/DateTimePicker';
@@ -34,9 +34,9 @@ const EditEventPage = () => {
       return;
     }
     fetchEvent();
-  }, [user, authLoading, navigate, id]);
+  }, [user, authLoading, navigate, id, fetchEvent]);
 
-  const fetchEvent = async () => {
+  const fetchEvent = useCallback(async () => {
     try {
       const response = await fetch(`/api/events/${id}`);
       if (response.ok) {
@@ -78,7 +78,7 @@ const EditEventPage = () => {
     } finally {
       setEventLoading(false);
     }
-  };
+  }, [id, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

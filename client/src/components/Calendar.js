@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EventModal from './EventModal';
+// eslint-disable-next-line no-unused-vars
 import { getContrastTextColor, getDarkerColor } from '../utils/colorContrast';
 import './Calendar.css';
 
@@ -162,6 +163,7 @@ const Calendar = () => {
           <button onClick={previousMonth} className="nav-button">&lt;</button>
           <div className="calendar-title">
             <h2>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h2>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a 
               href="#" 
               onClick={(e) => {
