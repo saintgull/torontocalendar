@@ -129,11 +129,11 @@ router.post('/',
         const startDateTime = new Date(`${event_date}T${start_time}`);
         console.log('Parsed start date:', startDateTime);
         const now = new Date();
+        console.log('Current time (server):', now);
+        console.log('Start time comparison:', startDateTime.toISOString(), 'vs', now.toISOString());
         
-        // Check if event starts in the past
-        if (startDateTime < now) {
-          return res.status(400).json({ error: 'Cannot add events in the past' });
-        }
+        // Removed past event check - timezone issues make this unreliable
+        // Users should be able to add events for "today" without timezone problems
         
         // If end_date and end_time are provided, validate end is after start
         if (end_date && end_time) {
