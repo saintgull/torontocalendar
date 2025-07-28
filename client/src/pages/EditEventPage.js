@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import DateTimePicker from '../components/DateTimePicker';
+import config from '../config';
 import './CreateEventPage.css';
 
 const EditEventPage = () => {
@@ -27,7 +28,7 @@ const EditEventPage = () => {
 
   const fetchEvent = useCallback(async () => {
     try {
-      const response = await fetch(`/api/events/${id}`);
+      const response = await fetch(`${config.API_BASE_URL}/api/events/${id}`);
       if (response.ok) {
         const event = await response.json();
         
@@ -122,7 +123,7 @@ const EditEventPage = () => {
     }
 
     try {
-      const response = await fetch(`/api/events/${id}`, {
+      const response = await fetch(`${config.API_BASE_URL}/api/events/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

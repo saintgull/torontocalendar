@@ -3,6 +3,7 @@ import { useAuth } from '../utils/AuthContext';
 import ProfileSidePanel from './ProfileSidePanel';
 // eslint-disable-next-line no-unused-vars
 import { formatDateDDMMYYYY, formatDateForDisplay } from '../utils/dateFormat';
+import config from '../config';
 import './EventModal.css';
 
 const EventModal = ({ event, onClose, onEventDeleted }) => {
@@ -12,7 +13,7 @@ const EventModal = ({ event, onClose, onEventDeleted }) => {
   
   const handleDownloadICS = async () => {
     try {
-      const response = await fetch(`/api/ics/event/${event.id}`, {
+      const response = await fetch(`${config.API_BASE_URL}/api/ics/event/${event.id}`, {
         credentials: 'include'
       });
       
@@ -48,7 +49,7 @@ const EventModal = ({ event, onClose, onEventDeleted }) => {
     let hasChildrenFlag = false;
     
     try {
-      const url = deleteAll ? `/api/events/${event.id}/series` : `/api/events/${event.id}`;
+      const url = deleteAll ? `${config.API_BASE_URL}/api/events/${event.id}/series` : `${config.API_BASE_URL}/api/events/${event.id}`;
       const response = await fetch(url, {
         method: 'DELETE',
         credentials: 'include'
@@ -71,7 +72,7 @@ const EventModal = ({ event, onClose, onEventDeleted }) => {
             handleDelete(true);
           } else {
             // Just delete the single event
-            const singleResponse = await fetch(`/api/events/${event.id}`, {
+            const singleResponse = await fetch(`${config.API_BASE_URL}/api/events/${event.id}`, {
               method: 'DELETE',
               credentials: 'include',
               headers: {

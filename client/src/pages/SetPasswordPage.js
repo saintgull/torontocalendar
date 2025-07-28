@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import config from '../config';
 import './SetPasswordPage.css';
 
 const SetPasswordPage = () => {
@@ -16,7 +17,7 @@ const SetPasswordPage = () => {
 
   const verifyToken = useCallback(async () => {
     try {
-      const response = await fetch(`/api/invite/verify/${token}`);
+      const response = await fetch(`${config.API_BASE_URL}/api/invite/verify/${token}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -56,7 +57,7 @@ const SetPasswordPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/invite/set-password', {
+      const response = await fetch(`${config.API_BASE_URL}/api/invite/set-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

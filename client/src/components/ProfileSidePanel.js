@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { formatDateDDMMYYYY } from '../utils/dateFormat';
+import config from '../config';
 import './ProfileSidePanel.css';
 
 const ProfileSidePanel = ({ userId, onClose }) => {
@@ -9,7 +10,7 @@ const ProfileSidePanel = ({ userId, onClose }) => {
 
   const fetchProfile = useCallback(async () => {
     try {
-      const response = await fetch(`/api/profiles/${userId}`);
+      const response = await fetch(`${config.API_BASE_URL}/api/profiles/${userId}`);
       
       if (response.ok) {
         const data = await response.json();

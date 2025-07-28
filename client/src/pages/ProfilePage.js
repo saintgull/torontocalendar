@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../utils/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { formatDateDDMMYYYY } from '../utils/dateFormat';
+import config from '../config';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -30,7 +31,7 @@ const ProfilePage = () => {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch('/api/profiles/me', {
+      const response = await fetch(`${config.API_BASE_URL}/api/profiles/me`, {
         credentials: 'include'
       });
       
@@ -67,7 +68,7 @@ const ProfilePage = () => {
     setSaving(true);
 
     try {
-      const response = await fetch('/api/profiles/me', {
+      const response = await fetch(`${config.API_BASE_URL}/api/profiles/me`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

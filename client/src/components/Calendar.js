@@ -110,7 +110,7 @@ const Calendar = () => {
     }
 
     try {
-      const response = await fetch(`/api/ics/bulk-download?start_date=${downloadStartDate}&end_date=${downloadEndDate}`);
+      const response = await fetch(`${config.API_BASE_URL}/api/ics/bulk-download?start_date=${downloadStartDate}&end_date=${downloadEndDate}`);
       
       if (!response.ok) {
         const error = await response.json();

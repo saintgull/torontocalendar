@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from '../config';
 import './ServerStatus.css';
 
 const ServerStatus = () => {
@@ -8,7 +9,7 @@ const ServerStatus = () => {
 
   const checkHealth = async () => {
     try {
-      const response = await fetch('/api/health', {
+      const response = await fetch(`${config.API_BASE_URL}/api/health`, {
         credentials: 'include' // Include cookies for authentication
       });
       const data = await response.json();

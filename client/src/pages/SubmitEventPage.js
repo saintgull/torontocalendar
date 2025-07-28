@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import config from '../config';
 import './CreateEventPage.css';
 
 const SubmitEventPage = () => {
@@ -28,7 +29,7 @@ const SubmitEventPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/submit-event', {
+      const response = await fetch(`${config.API_BASE_URL}/api/submit-event`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
