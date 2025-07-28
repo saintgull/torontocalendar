@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import DateTimePicker from '../components/DateTimePicker';
+import config from '../config';
 import './CreateEventPage.css';
 
 const CreateEventPage = () => {
@@ -64,7 +65,7 @@ const CreateEventPage = () => {
     console.log('Form data being sent:', dataToSend);
 
     try {
-      const response = await fetch('/api/events', {
+      const response = await fetch(`${config.API_BASE_URL}/api/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

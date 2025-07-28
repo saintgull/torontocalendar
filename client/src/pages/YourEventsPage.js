@@ -3,6 +3,7 @@ import { useAuth } from '../utils/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { getContrastTextColor } from '../utils/colorContrast';
 import { formatDateDDMMYYYY } from '../utils/dateFormat';
+import config from '../config';
 import './YourEventsPage.css';
 
 const YourEventsPage = () => {
@@ -27,7 +28,7 @@ const YourEventsPage = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/profiles/me/events', {
+      const response = await fetch(`${config.API_BASE_URL}/api/profiles/me/events`, {
         credentials: 'include'
       });
       
@@ -52,7 +53,7 @@ const YourEventsPage = () => {
     setDeleting(eventId);
     
     try {
-      const response = await fetch(`/api/events/${eventId}`, {
+      const response = await fetch(`${config.API_BASE_URL}/api/events/${eventId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -82,7 +83,7 @@ const YourEventsPage = () => {
     formData.append('icsFile', file);
 
     try {
-      const response = await fetch('/api/events/upload-ics', {
+      const response = await fetch(`${config.API_BASE_URL}/api/events/upload-ics`, {
         method: 'POST',
         body: formData,
         credentials: 'include'
