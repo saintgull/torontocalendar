@@ -87,8 +87,19 @@ const Calendar = () => {
         return startDateString === targetDateString;
       }
       
-      // For multi-day events, check if target date is within range
+      // For multi-day events
       const endDateString = event.end_date.split('T')[0];
+      
+      // If event ends before 5 AM, only show on start date
+      if (event.end_time && endDateString !== startDateString) {
+        const [hours] = event.end_time.split(':').map(Number);
+        if (hours < 5) {
+          // Only display on the start date
+          return startDateString === targetDateString;
+        }
+      }
+      
+      // Otherwise, show on all days in range
       return targetDateString >= startDateString && targetDateString <= endDateString;
     });
     
