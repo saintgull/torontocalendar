@@ -1,5 +1,7 @@
 # Toronto Calendar
 
+https://torontoevents.live
+
 A community-driven event calendar for Toronto, built with React and Node.js. This platform allows users to discover, create, and manage local events with features like recurring events, ICS import/export, and user authentication.
 
 ## 🌟 Features
