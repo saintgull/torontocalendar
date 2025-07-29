@@ -106,7 +106,7 @@ router.post('/',
     body('description').optional().isLength({ max: 2000 }).withMessage('Description must be under 2000 characters'),
     body('link').optional().isURL().withMessage('Invalid URL format'),
     body('is_recurring').optional().isBoolean().withMessage('Invalid recurring value'),
-    body('recurrence_type').optional().isIn(['daily', 'weekly', 'monthly']).withMessage('Invalid recurrence type'),
+    body('recurrence_type').optional().isIn(['daily', 'weekly', 'biweekly', 'monthly']).withMessage('Invalid recurrence type'),
     body('recurrence_end_date').optional().isISO8601().withMessage('Valid recurrence end date required')
   ],
   async (req, res) => {
@@ -455,7 +455,7 @@ router.put('/:id',
     body('description').optional().isLength({ max: 2000 }).withMessage('Description must be under 2000 characters'),
     body('link').optional().isURL().withMessage('Invalid URL format'),
     body('is_recurring').optional().isBoolean().withMessage('Invalid recurring value'),
-    body('recurrence_type').optional().isIn(['daily', 'weekly', 'monthly']).withMessage('Invalid recurrence type'),
+    body('recurrence_type').optional().isIn(['daily', 'weekly', 'biweekly', 'monthly']).withMessage('Invalid recurrence type'),
     body('recurrence_end_date').optional().isISO8601().withMessage('Valid recurrence end date required')
   ],
   async (req, res) => {
