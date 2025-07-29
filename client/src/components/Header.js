@@ -87,7 +87,7 @@ const Header = () => {
         </div>
       </header>
       {/* Only show ServerStatus for admin users (you can customize the email) */}
-      {user && user.email === 'admin@tocalendar.com' && <ServerStatus />}
+      {user && user.email === 'saintgull94@gmail.com' && <ServerStatus />}
     </>
   );
 };

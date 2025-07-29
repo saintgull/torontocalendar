@@ -63,7 +63,7 @@ Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'America/Toronto'
       // Send email notification
       await transporter.sendMail({
         from: process.env.EMAIL_USER || 'noreply@torontoevents.live',
-        to: process.env.SUBMISSION_EMAIL || 'admin@torontoevents.live',
+        to: process.env.SUBMISSION_EMAIL || 'saintgull94@gmail.com',
         subject: emailSubject,
         text: emailBody,
         html: emailBody.replace(/\n/g, '<br>')
