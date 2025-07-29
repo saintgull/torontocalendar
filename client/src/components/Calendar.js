@@ -13,6 +13,7 @@ const Calendar = () => {
   const [showBulkDownload, setShowBulkDownload] = useState(false);
   const [downloadStartDate, setDownloadStartDate] = useState('');
   const [downloadEndDate, setDownloadEndDate] = useState('');
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     fetchEvents();
@@ -120,12 +121,15 @@ const Calendar = () => {
       return;
     }
 
+    setIsDownloading(true);
+
     try {
       const response = await fetch(`${config.API_BASE_URL}/api/ics/bulk-download?start_date=${downloadStartDate}&end_date=${downloadEndDate}`);
       
       if (!response.ok) {
         const error = await response.json();
         alert(error.error || 'Failed to download events');
+        setIsDownloading(false);
         return;
       }
       
@@ -152,6 +156,8 @@ const Calendar = () => {
     } catch (error) {
       console.error('Bulk download error:', error);
       alert('Failed to download events. Please try again.');
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -302,17 +308,24 @@ const Calendar = () => {
                 <button 
                   className="btn btn-secondary" 
                   onClick={() => setShowBulkDownload(false)}
+                  disabled={isDownloading}
                 >
                   Cancel
                 </button>
                 <button 
                   className="btn btn-primary" 
                   onClick={handleBulkDownload}
-                  disabled={!downloadStartDate || !downloadEndDate}
+                  disabled={!downloadStartDate || !downloadEndDate || isDownloading}
                 >
-                  Download ZIP
+                  {isDownloading ? 'Preparing download... Please wait' : 'Download ZIP'}
                 </button>
               </div>
+              
+              {isDownloading && (
+                <div style={{ textAlign: 'center', marginTop: '10px', color: '#666' }}>
+                  <small>This may take a moment for large date ranges...</small>
+                </div>
+              )}
             </div>
           </div>
         </div>
