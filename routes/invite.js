@@ -10,7 +10,7 @@ router.get('/verify/:token', async (req, res) => {
     const { token } = req.params;
     
     const result = await db.query(
-      'SELECT email, display_name FROM users WHERE invite_token = $1 AND invite_expires_at > NOW() AND password_set = false',
+      'SELECT email, display_name FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
       [token]
     );
     
@@ -45,7 +45,7 @@ router.post('/set-password',
       
       // Find user with valid invite token
       const userResult = await db.query(
-        'SELECT id, email, display_name FROM users WHERE invite_token = $1 AND invite_expires_at > NOW() AND password_set = false',
+        'SELECT id, email, display_name FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
         [token]
       );
       
@@ -61,7 +61,7 @@ router.post('/set-password',
       
       // Update user with password and clear invite token
       await db.query(
-        'UPDATE users SET password_hash = $1, password_set = true, invite_token = NULL, invite_expires_at = NULL WHERE id = $2',
+        'UPDATE users SET password_hash = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
         [passwordHash, user.id]
       );
       
