@@ -8,7 +8,8 @@ const DateTimePicker = ({
   onTimeChange, 
   label, 
   required = false,
-  disabled = false 
+  disabled = false,
+  hideTime = false 
 }) => {
   // Get today's date in YYYY-MM-DD format for min attribute
   const today = new Date().toISOString().split('T')[0];
@@ -35,17 +36,19 @@ const DateTimePicker = ({
           />
         </div>
         
-        <div className="time-input-wrapper">
-          <input
-            type="time"
-            value={defaultTime}
-            onChange={(e) => onTimeChange(e.target.value)}
-            required={required}
-            disabled={disabled}
-            className="time-input"
-            step="900" // 15-minute increments
-          />
-        </div>
+        {!hideTime && (
+          <div className="time-input-wrapper">
+            <input
+              type="time"
+              value={defaultTime}
+              onChange={(e) => onTimeChange(e.target.value)}
+              required={required}
+              disabled={disabled}
+              className="time-input"
+              step="900" // 15-minute increments
+            />
+          </div>
+        )}
       </div>
     </div>
   );

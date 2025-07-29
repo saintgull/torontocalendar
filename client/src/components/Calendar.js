@@ -231,7 +231,9 @@ const Calendar = () => {
                           }}
                         >
                           <div className="event-title" style={{ color: eventColor }}>{event.title}</div>
-                          <div className="event-time" style={{ color: eventColor, opacity: 0.8 }}>{formatTime(event.start_time)}</div>
+                          <div className="event-time" style={{ color: eventColor, opacity: 0.8 }}>
+                            {event.is_all_day ? 'All day' : formatTime(event.start_time)}
+                          </div>
                         </div>
                       );
                     })}

@@ -105,6 +105,7 @@ router.post('/',
     body('location').trim().isLength({ min: 1, max: 255 }).withMessage('Location is required and must be under 255 characters'),
     body('description').optional().isLength({ max: 2000 }).withMessage('Description must be under 2000 characters'),
     body('link').optional().isURL().withMessage('Invalid URL format'),
+    body('is_all_day').optional().isBoolean().withMessage('Invalid all day value'),
     body('is_recurring').optional().isBoolean().withMessage('Invalid recurring value'),
     body('recurrence_type').optional().isIn(['daily', 'weekly', 'biweekly', 'monthly']).withMessage('Invalid recurrence type'),
     body('recurrence_end_date').optional().isISO8601().withMessage('Valid recurrence end date required')
@@ -117,7 +118,7 @@ router.post('/',
       }
 
       const { title, event_date, start_time, end_time, end_date, location, description, link,
-              is_recurring, recurrence_type, recurrence_end_date } = req.body;
+              is_all_day, is_recurring, recurrence_type, recurrence_end_date } = req.body;
       
       console.log('Creating event:', title, 'on', event_date, 'at', start_time);
       if (is_recurring) {
@@ -208,15 +209,15 @@ router.post('/',
             recurrenceRule = `FREQ=${recurrence_type.toUpperCase()}`;
           }
           
-          query = `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_recurring, recurrence_rule, recurrence_end_date, color)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+          query = `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_all_day, is_recurring, recurrence_rule, recurrence_end_date, color)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
                    RETURNING *`;
-          params = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, req.user.id, req.user.display_name, true, recurrenceRule, recurrence_end_date, eventColor];
+          params = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, req.user.id, req.user.display_name, is_all_day || false, true, recurrenceRule, recurrence_end_date, eventColor];
         } else {
-          query = `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, color)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+          query = `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_all_day, color)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
                    RETURNING *`;
-          params = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, req.user.id, req.user.display_name, eventColor];
+          params = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, req.user.id, req.user.display_name, is_all_day || false, eventColor];
         }
         
         const result = await db.query(query, params);
@@ -241,8 +242,8 @@ router.post('/',
             
             try {
               const recurringResult = await db.query(
-                `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_recurring, recurrence_rule, recurrence_end_date, parent_event_id, color)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                `INSERT INTO events (title, event_date, start_time, end_time, end_date, location, description, link, created_by, creator_name, is_all_day, is_recurring, recurrence_rule, recurrence_end_date, parent_event_id, color)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                  RETURNING id, event_date`,
                 [
                   title, 
@@ -255,6 +256,7 @@ router.post('/',
                   link || null,
                   req.user.id, 
                   req.user.display_name, 
+                  is_all_day || false,
                   true, 
                   recurrenceRule, 
                   recurrence_end_date,
@@ -454,6 +456,7 @@ router.put('/:id',
     body('location').trim().isLength({ min: 1, max: 255 }).withMessage('Location is required and must be under 255 characters'),
     body('description').optional().isLength({ max: 2000 }).withMessage('Description must be under 2000 characters'),
     body('link').optional().isURL().withMessage('Invalid URL format'),
+    body('is_all_day').optional().isBoolean().withMessage('Invalid all day value'),
     body('is_recurring').optional().isBoolean().withMessage('Invalid recurring value'),
     body('recurrence_type').optional().isIn(['daily', 'weekly', 'biweekly', 'monthly']).withMessage('Invalid recurrence type'),
     body('recurrence_end_date').optional().isISO8601().withMessage('Valid recurrence end date required')
@@ -469,7 +472,7 @@ router.put('/:id',
       }
 
       const { title, event_date, start_time, end_time, end_date, location, description, link,
-              is_recurring, recurrence_type, recurrence_end_date } = req.body;
+              is_all_day, is_recurring, recurrence_type, recurrence_end_date } = req.body;
       console.log('Updating event with data:', { title, event_date, start_time, end_time, end_date, location, description, link, is_recurring, recurrence_type, recurrence_end_date });
 
       // Check if event exists and user owns it
@@ -537,19 +540,19 @@ router.put('/:id',
           
           updateQuery = `UPDATE events 
                         SET title = $1, event_date = $2, start_time = $3, end_time = $4, end_date = $5, 
-                            location = $6, description = $7, link = $8, is_recurring = $9, recurrence_rule = $10, recurrence_end_date = $11
-                        WHERE id = $12
+                            location = $6, description = $7, link = $8, is_all_day = $9, is_recurring = $10, recurrence_rule = $11, recurrence_end_date = $12
+                        WHERE id = $13
                         RETURNING *`;
           updateParams = [title, event_date, start_time, end_time || null, end_date || null, 
-                         location, description || null, link || null, is_recurring, recurrenceRule, 
+                         location, description || null, link || null, is_all_day || false, is_recurring, recurrenceRule, 
                          is_recurring ? recurrence_end_date : null, id];
         } else {
           // Standard update without recurrence fields
           updateQuery = `UPDATE events 
-                        SET title = $1, event_date = $2, start_time = $3, end_time = $4, end_date = $5, location = $6, description = $7, link = $8
-                        WHERE id = $9
+                        SET title = $1, event_date = $2, start_time = $3, end_time = $4, end_date = $5, location = $6, description = $7, link = $8, is_all_day = $9
+                        WHERE id = $10
                         RETURNING *`;
-          updateParams = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, id];
+          updateParams = [title, event_date, start_time, end_time || null, end_date || null, location, description || null, link || null, is_all_day || false, id];
         }
         
         console.log('Updating event with query:', updateQuery);

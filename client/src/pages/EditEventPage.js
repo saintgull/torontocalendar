@@ -57,6 +57,7 @@ const EditEventPage = () => {
           location: event.location,
           description: event.description || '',
           link: event.link || '',
+          is_all_day: event.is_all_day || false,
           is_recurring: event.is_recurring || false,
           recurrence_type: recurrenceType,
           recurrence_end_date: event.recurrence_end_date ? event.recurrence_end_date.split('T')[0] : ''
@@ -108,12 +109,13 @@ const EditEventPage = () => {
     const dataToSend = {
       title: formData.title,
       event_date: formData.event_date,
-      start_time: formData.start_time,
-      end_time: formData.end_time || undefined,
+      start_time: formData.is_all_day ? '00:00' : formData.start_time,
+      end_time: formData.is_all_day ? '23:59' : (formData.end_time || undefined),
       end_date: formData.end_date || undefined,
       location: formData.location,
       description: formData.description || undefined,
       link: formData.link || undefined,
+      is_all_day: formData.is_all_day,
       is_recurring: formData.is_recurring
     };
     
@@ -201,6 +203,21 @@ const EditEventPage = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="is_all_day" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                id="is_all_day"
+                name="is_all_day"
+                checked={formData.is_all_day}
+                onChange={(e) => setFormData(prev => ({ ...prev, is_all_day: e.target.checked }))}
+                disabled={loading}
+                style={{ marginRight: '8px', width: 'auto', minWidth: 'auto' }}
+              />
+              All day event
+            </label>
+          </div>
+
           <DateTimePicker
             dateValue={formData.event_date}
             timeValue={formData.start_time}
@@ -216,6 +233,7 @@ const EditEventPage = () => {
             label="Event Start"
             required={true}
             disabled={loading}
+            hideTime={formData.is_all_day}
           />
 
           <DateTimePicker
@@ -224,9 +242,10 @@ const EditEventPage = () => {
             onDateChange={(date) => setFormData(prev => ({ ...prev, end_date: date }))}
             onTimeChange={(time) => setFormData(prev => ({ ...prev, end_time: time }))}
             label="Event End"
-            required={true}
-            timeRequired={true}
+            required={!formData.is_all_day}
+            timeRequired={!formData.is_all_day}
             disabled={loading}
+            hideTime={formData.is_all_day}
           />
 
           <div className="form-group">

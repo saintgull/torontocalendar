@@ -130,20 +130,30 @@ const EventModal = ({ event, onClose, onEventDeleted }) => {
         
         <div className="modal-body">
           <div className="event-details">
-            <div className="detail-item">
-              <strong>Start:</strong> {formatDate(event.event_date)} at {formatTime(event.start_time)}
-            </div>
-            
-            {event.end_date && event.end_time && (
+            {event.is_all_day ? (
               <div className="detail-item">
-                <strong>End:</strong> {formatDate(event.end_date)} at {formatTime(event.end_time)}
+                <strong>Date:</strong> {formatDate(event.event_date)}
+                {event.end_date && event.end_date !== event.event_date && ` - ${formatDate(event.end_date)}`}
+                {' '}(All day)
               </div>
-            )}
-            
-            {!event.end_date && event.end_time && (
-              <div className="detail-item">
-                <strong>End:</strong> {formatTime(event.end_time)} (same day)
-              </div>
+            ) : (
+              <>
+                <div className="detail-item">
+                  <strong>Start:</strong> {formatDate(event.event_date)} at {formatTime(event.start_time)}
+                </div>
+                
+                {event.end_date && event.end_time && (
+                  <div className="detail-item">
+                    <strong>End:</strong> {formatDate(event.end_date)} at {formatTime(event.end_time)}
+                  </div>
+                )}
+                
+                {!event.end_date && event.end_time && (
+                  <div className="detail-item">
+                    <strong>End:</strong> {formatTime(event.end_time)} (same day)
+                  </div>
+                )}
+              </>
             )}
             
             <div className="detail-item">
