@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import EventModal from './EventModal';
 // eslint-disable-next-line no-unused-vars
 import { getContrastTextColor, getDarkerColor } from '../utils/colorContrast';
@@ -330,6 +331,24 @@ const Calendar = () => {
           </div>
         </div>
       )}
+      
+      <div style={{ 
+        textAlign: 'center', 
+        marginTop: '40px', 
+        marginBottom: '20px' 
+      }}>
+        <Link 
+          to="/about" 
+          style={{ 
+            color: 'var(--dark-purple)', 
+            fontSize: '1.2rem',
+            textDecoration: 'none',
+            fontWeight: '600'
+          }}
+        >
+          About
+        </Link>
+      </div>
     </div>
   );
 };
