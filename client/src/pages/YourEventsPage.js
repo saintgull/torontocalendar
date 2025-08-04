@@ -269,7 +269,17 @@ const YourEventsPage = () => {
                           {event.end_date && ` (until ${formatDate(event.end_date)})`}
                         </div>
                         <div className="meta-item">
-                          <strong>Location:</strong> {event.location}
+                          <strong>Location:</strong>{' '}
+                          <a 
+                            href={`https://maps.google.com/?q=${encodeURIComponent(event.location)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: 'var(--auburn)', textDecoration: 'none' }}
+                            onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                            onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                          >
+                            {event.location}
+                          </a>
                         </div>
                         {event.description && (
                           <div className="meta-item">
@@ -337,7 +347,17 @@ const YourEventsPage = () => {
                           <strong>Date:</strong> {formatDate(event.event_date)}
                         </div>
                         <div className="meta-item">
-                          <strong>Location:</strong> {event.location}
+                          <strong>Location:</strong>{' '}
+                          <a 
+                            href={`https://maps.google.com/?q=${encodeURIComponent(event.location)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: 'var(--auburn)', textDecoration: 'none' }}
+                            onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                            onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                          >
+                            {event.location}
+                          </a>
                         </div>
                       </div>
                     </div>

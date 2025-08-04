@@ -157,7 +157,17 @@ const EventModal = ({ event, onClose, onEventDeleted }) => {
             )}
             
             <div className="detail-item">
-              <strong>Location:</strong> {event.location}
+              <strong>Location:</strong>{' '}
+              <a 
+                href={`https://maps.google.com/?q=${encodeURIComponent(event.location)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--auburn)', textDecoration: 'none' }}
+                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+              >
+                {event.location}
+              </a>
             </div>
             
             {event.link && (
