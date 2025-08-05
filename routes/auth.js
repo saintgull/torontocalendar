@@ -22,20 +22,35 @@ router.post('/login',
 
       const { email, password } = req.body;
       
+      console.log('Login attempt for email:', email);
+      console.log('Email after lowercase:', email.toLowerCase());
+      console.log('Password length:', password.length);
+      
       // Find user
       const userResult = await db.query(
         'SELECT * FROM users WHERE email = $1 AND password_set = true',
         [email.toLowerCase()]
       );
       
+      console.log('User query returned rows:', userResult.rows.length);
+      
       if (userResult.rows.length === 0) {
+        // Let's check if user exists at all
+        const checkUserResult = await db.query(
+          'SELECT email, password_set, password_hash IS NOT NULL as has_hash FROM users WHERE email = $1',
+          [email.toLowerCase()]
+        );
+        console.log('User check result:', checkUserResult.rows);
         return res.status(401).json({ error: 'Invalid credentials' });
       }
       
       const user = userResult.rows[0];
+      console.log('Found user:', { id: user.id, email: user.email, has_password: !!user.password_hash });
       
       // Check password
       const isValidPassword = await bcrypt.compare(password, user.password_hash);
+      console.log('Password comparison result:', isValidPassword);
+      
       if (!isValidPassword) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
