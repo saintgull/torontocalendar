@@ -60,10 +60,22 @@ router.post('/set-password',
       const passwordHash = await bcrypt.hash(password, saltRounds);
       
       // Update user with password and clear invite token
-      await db.query(
+      console.log('Updating user password for user ID:', user.id);
+      console.log('Password hash generated:', passwordHash ? 'Yes' : 'No');
+      
+      const updateResult = await db.query(
         'UPDATE users SET password_hash = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
         [passwordHash, user.id]
       );
+      
+      console.log('Update result rowCount:', updateResult.rowCount);
+      
+      // Verify the update worked
+      const verifyResult = await db.query(
+        'SELECT password_hash IS NOT NULL as has_password FROM users WHERE id = $1',
+        [user.id]
+      );
+      console.log('Password verification:', verifyResult.rows[0]);
       
       res.json({
         message: 'Password set successfully',
