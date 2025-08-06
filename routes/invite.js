@@ -64,7 +64,7 @@ router.post('/set-password',
       console.log('Password hash generated:', passwordHash ? 'Yes' : 'No');
       
       const updateResult = await db.query(
-        'UPDATE users SET password_hash = $1, password_set = true, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
+        'UPDATE users SET password_hash = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
         [passwordHash, user.id]
       );
       

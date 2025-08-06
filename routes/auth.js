@@ -28,7 +28,7 @@ router.post('/login',
       
       // Find user
       const userResult = await db.query(
-        'SELECT * FROM users WHERE email = $1 AND password_set = true',
+        'SELECT * FROM users WHERE email = $1 AND password_hash IS NOT NULL',
         [email.toLowerCase()]
       );
       
@@ -37,7 +37,7 @@ router.post('/login',
       if (userResult.rows.length === 0) {
         // Let's check if user exists at all
         const checkUserResult = await db.query(
-          'SELECT email, password_set, password_hash IS NOT NULL as has_hash FROM users WHERE email = $1',
+          'SELECT email, password_hash IS NOT NULL as has_hash FROM users WHERE email = $1',
           [email.toLowerCase()]
         );
         console.log('User check result:', checkUserResult.rows);

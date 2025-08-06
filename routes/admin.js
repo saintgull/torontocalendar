@@ -67,7 +67,7 @@ router.post('/users',
 router.get('/users', requireAdmin, async (req, res) => {
   try {
     const result = await db.query(
-      'SELECT id, email, display_name, password_set, created_at FROM users ORDER BY created_at DESC'
+      'SELECT id, email, display_name, password_hash IS NOT NULL as password_set, created_at FROM users ORDER BY created_at DESC'
     );
     
     res.json(result.rows);
