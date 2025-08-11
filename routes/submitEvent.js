@@ -1,10 +1,19 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const nodemailer = require('nodemailer');
+let nodemailer;
+try {
+  nodemailer = require('nodemailer');
+} catch (error) {
+  console.log('Nodemailer not installed - email functionality disabled');
+}
 const router = express.Router();
 
 // Create email transporter (you'll need to configure this with your email settings)
 const createTransporter = () => {
+  if (!nodemailer) {
+    console.log('Nodemailer not available - cannot create transporter');
+    return null;
+  }
   // Using mail.com SMTP settings
   return nodemailer.createTransporter({
     host: 'smtp.mail.com',
@@ -63,9 +72,22 @@ Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'America/Toronto'
     `.trim();
 
     try {
+      console.log('Creating email transporter...');
+      console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+      console.log('EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Set' : 'Not set');
+      console.log('SUBMISSION_EMAIL:', process.env.SUBMISSION_EMAIL || 'saintgull94@gmail.com');
+      
       const transporter = createTransporter();
       
+      if (!transporter) {
+        console.log('Email transporter not available - skipping email');
+        throw new Error('Email service not configured');
+      }
+      
       // Send email notification
+      console.log('Sending email from:', process.env.EMAIL_USER || 'torontoevents@writeme.com');
+      console.log('Sending email to:', process.env.SUBMISSION_EMAIL || 'saintgull94@gmail.com');
+      
       await transporter.sendMail({
         from: process.env.EMAIL_USER || 'torontoevents@writeme.com',
         to: process.env.SUBMISSION_EMAIL || 'saintgull94@gmail.com',
