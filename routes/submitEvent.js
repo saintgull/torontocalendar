@@ -26,11 +26,12 @@ router.post('/', [
   body('submitterName').trim().isLength({ min: 1, max: 100 }).withMessage('Your name is required and must be under 100 characters'),
   body('submitterEmail').optional().isEmail().withMessage('Please provide a valid email address'),
   body('eventLink').optional().isURL().withMessage('Please provide a valid URL'),
-  body('eventDescription').trim().isLength({ min: 10, max: 2000 }).withMessage('Event description is required and must be between 10-2000 characters')
+  body('eventDescription').trim().isLength({ min: 1, max: 2000 }).withMessage('Event description is required and must be under 2000 characters')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({ 
         error: 'Please check your form entries',
         details: errors.array()
