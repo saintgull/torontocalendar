@@ -5,13 +5,17 @@ const router = express.Router();
 
 // Create email transporter (you'll need to configure this with your email settings)
 const createTransporter = () => {
-  // For development, you can use Gmail with an app password
-  // For production, consider using a service like SendGrid, AWS SES, etc.
+  // Using mail.com SMTP settings
   return nodemailer.createTransporter({
-    service: 'gmail',
+    host: 'smtp.mail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.EMAIL_USER || 'your-email@gmail.com',
+      user: process.env.EMAIL_USER || 'torontoevents@writeme.com',
       pass: process.env.EMAIL_PASSWORD || 'your-app-password'
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   });
 };
@@ -62,7 +66,7 @@ Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'America/Toronto'
       
       // Send email notification
       await transporter.sendMail({
-        from: process.env.EMAIL_USER || 'noreply@torontoevents.live',
+        from: process.env.EMAIL_USER || 'torontoevents@writeme.com',
         to: process.env.SUBMISSION_EMAIL || 'saintgull94@gmail.com',
         subject: emailSubject,
         text: emailBody,
@@ -88,7 +92,7 @@ Toronto Event Calendar Team
         `.trim();
 
         await transporter.sendMail({
-          from: process.env.EMAIL_USER || 'noreply@torontoevents.live',
+          from: process.env.EMAIL_USER || 'torontoevents@writeme.com',
           to: submitterEmail,
           subject: confirmationSubject,
           text: confirmationBody,
