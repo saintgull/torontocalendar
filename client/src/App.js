@@ -14,6 +14,7 @@ import YourEventsPage from './pages/YourEventsPage';
 import SetPasswordPage from './pages/SetPasswordPage';
 import SubmitEventPage from './pages/SubmitEventPage';
 import AboutPage from './pages/AboutPage';
+import SubmissionsPage from './pages/SubmissionsPage';
 
 // Context for authentication
 import { AuthProvider } from './utils/AuthContext';
@@ -35,6 +36,7 @@ function App() {
               <Route path="/set-password" element={<SetPasswordPage />} />
               <Route path="/submit-event" element={<SubmitEventPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/submissions" element={<SubmissionsPage />} />
             </Routes>
           </main>
           <Footer />

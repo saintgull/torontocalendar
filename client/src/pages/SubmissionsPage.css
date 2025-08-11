@@ -1,0 +1,134 @@
+.submissions-page {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--white-smoke);
+}
+
+.submissions-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.submissions-container h1 {
+  color: var(--dark-purple);
+  font-family: var(--font-primary);
+  margin-bottom: 30px;
+}
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.submission-card {
+  background: white;
+  border: 2px solid var(--dark-purple);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.submission-card.processed {
+  opacity: 0.7;
+  border-color: #ccc;
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.submission-header h3 {
+  color: var(--dark-purple);
+  margin: 0;
+  font-family: var(--font-primary);
+}
+
+.status {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: var(--golden-yellow);
+  color: var(--dark-purple);
+}
+
+.status-processed {
+  background-color: #e0e0e0;
+  color: #666;
+}
+
+.submission-details p {
+  margin: 8px 0;
+  color: var(--color-text);
+}
+
+.submission-details strong {
+  color: var(--dark-purple);
+}
+
+.submission-details a {
+  color: var(--auburn);
+  text-decoration: none;
+}
+
+.submission-details a:hover {
+  text-decoration: underline;
+}
+
+.description {
+  background-color: var(--white-smoke);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  white-space: pre-wrap;
+}
+
+.submission-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 15px !important;
+}
+
+.submission-actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.no-submissions {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--dark-purple);
+  font-size: 1.1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .submissions-page {
+    padding: 10px;
+  }
+  
+  .submission-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .submission-card {
+    padding: 15px;
+  }
+}

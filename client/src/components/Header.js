@@ -62,6 +62,11 @@ const Header = () => {
                       <Link to="/your-events" className="dropdown-item" onClick={() => setShowDropdown(false)}>
                         Your Events
                       </Link>
+                      {user.email === 'saintgull94@gmail.com' && (
+                        <Link to="/submissions" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                          Check Submissions
+                        </Link>
+                      )}
                       <hr className="dropdown-divider" />
                       <button onClick={handleLogout} className="dropdown-item">
                         Sign Out
