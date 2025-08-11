@@ -1,5 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const db = require('../utils/db');
 let nodemailer;
 try {
   nodemailer = require('nodemailer');
@@ -133,12 +134,25 @@ Toronto Event Calendar Team
     } catch (emailError) {
       console.error('Error sending email:', emailError);
       
-      // Still return success to user, but log the email failure
-      // You could also save to database as backup
-      res.json({ 
-        success: true, 
-        message: 'Event submitted successfully! We\'ll review it and add it to the calendar if approved.' 
-      });
+      // Save to database as backup when email fails
+      try {
+        console.log('Saving submission to database as fallback...');
+        await db.query(
+          `INSERT INTO event_submissions 
+           (event_name, submitter_name, submitter_email, event_link, event_description) 
+           VALUES ($1, $2, $3, $4, $5)`,
+          [eventName, submitterName, submitterEmail, eventLink, eventDescription]
+        );
+        console.log('Submission saved to database successfully');
+        
+        res.json({ 
+          success: true, 
+          message: 'Event submitted successfully! We\'ll review it and add it to the calendar if approved.' 
+        });
+      } catch (dbError) {
+        console.error('Database save also failed:', dbError);
+        res.status(500).json({ error: 'Failed to submit event. Please try again later.' });
+      }
     }
 
   } catch (error) {
