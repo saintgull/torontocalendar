@@ -216,11 +216,20 @@ const Calendar = () => {
         {days.map((day, index) => {
           const dayEvents = day ? getEventsForDate(day) : [];
           
+          const isToday = day && 
+            currentDate.getMonth() === new Date().getMonth() && 
+            currentDate.getFullYear() === new Date().getFullYear() && 
+            day === new Date().getDate();
+          
           return (
-            <div key={index} className={`calendar-day ${!day ? 'empty' : ''}`}>
+            <div 
+              key={index} 
+              className={`calendar-day ${!day ? 'empty' : ''} ${isToday ? 'today' : ''}`}
+              style={isToday ? { backgroundColor: '#e8f5e9', border: '2px solid #4caf50' } : {}}
+            >
               {day && (
                 <>
-                  <div className="day-number">{day}</div>
+                  <div className="day-number" style={isToday ? { color: '#2e7d32', fontWeight: 'bold' } : {}}>{day}</div>
                   <div className="day-events">
                     {dayEvents.map(event => {
                       const eventColor = event.color || '#470063';
