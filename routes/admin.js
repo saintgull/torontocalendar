@@ -77,4 +77,37 @@ router.get('/users', requireAdmin, async (req, res) => {
   }
 });
 
+// GET /api/admin/submissions - View event submissions
+router.get('/submissions', requireAdmin, async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT * FROM event_submissions 
+       ORDER BY created_at DESC 
+       LIMIT 50`
+    );
+    
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching submissions:', error);
+    res.status(500).json({ error: 'Failed to fetch submissions' });
+  }
+});
+
+// PATCH /api/admin/submissions/:id/processed - Mark submission as processed
+router.patch('/submissions/:id/processed', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    await db.query(
+      'UPDATE event_submissions SET processed = true WHERE id = $1',
+      [id]
+    );
+    
+    res.json({ message: 'Submission marked as processed' });
+  } catch (error) {
+    console.error('Error updating submission:', error);
+    res.status(500).json({ error: 'Failed to update submission' });
+  }
+});
+
 module.exports = router;
