@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import EventModal from './EventModal';
 // eslint-disable-next-line no-unused-vars
@@ -15,10 +15,28 @@ const Calendar = () => {
   const [downloadStartDate, setDownloadStartDate] = useState('');
   const [downloadEndDate, setDownloadEndDate] = useState('');
   const [isDownloading, setIsDownloading] = useState(false);
+  const todayRef = useRef(null);
 
   useEffect(() => {
     fetchEvents();
   }, []);
+
+  useEffect(() => {
+    // Scroll to today when calendar loads or currentDate changes
+    if (todayRef.current && !loading) {
+      const today = new Date();
+      // Only scroll if we're viewing the current month
+      if (currentDate.getMonth() === today.getMonth() && 
+          currentDate.getFullYear() === today.getFullYear()) {
+        setTimeout(() => {
+          todayRef.current.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }, 100);
+      }
+    }
+  }, [currentDate, loading]);
 
   const fetchEvents = async () => {
     try {
@@ -224,6 +242,7 @@ const Calendar = () => {
           return (
             <div 
               key={index} 
+              ref={isToday ? todayRef : null}
               className={`calendar-day ${!day ? 'empty' : ''} ${isToday ? 'today' : ''}`}
               style={isToday ? { backgroundColor: '#f0f7e8', border: '2px solid #7fb539' } : {}}
             >
