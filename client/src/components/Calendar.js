@@ -225,11 +225,11 @@ const Calendar = () => {
             <div 
               key={index} 
               className={`calendar-day ${!day ? 'empty' : ''} ${isToday ? 'today' : ''}`}
-              style={isToday ? { backgroundColor: '#e8f5e9', border: '2px solid #4caf50' } : {}}
+              style={isToday ? { backgroundColor: '#f0f7e8', border: '2px solid #7fb539' } : {}}
             >
               {day && (
                 <>
-                  <div className="day-number" style={isToday ? { color: '#2e7d32', fontWeight: 'bold' } : {}}>{day}</div>
+                  <div className="day-number" style={isToday ? { color: '#5d8a2a', fontWeight: 'bold' } : {}}>{day}</div>
                   <div className="day-events">
                     {dayEvents.map(event => {
                       const eventColor = event.color || '#470063';
