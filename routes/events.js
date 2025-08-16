@@ -476,9 +476,10 @@ router.put('/:id',
       console.log('Updating event with data:', { title, event_date, start_time, end_time, end_date, location, description, link, is_recurring, recurrence_type, recurrence_end_date });
 
       // Check if event exists and user owns it
+      let eventCheck;
       try {
-        const eventCheck = await db.query(
-          'SELECT created_by FROM events WHERE id = $1',
+        eventCheck = await db.query(
+          'SELECT * FROM events WHERE id = $1',
           [id]
         );
         
