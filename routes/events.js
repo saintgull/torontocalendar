@@ -511,8 +511,24 @@ router.put('/:id',
         
         console.log('Parsed dates - new:', startDateTime, 'existing:', existingStartDateTime, 'now:', now);
         
-        // Only prevent updates if trying to change the date/time to the past
-        if (startDateTime < now && (event_date !== existingDateStr || start_time !== existingEvent.start_time)) {
+        // Format dates for comparison
+        const newDateStr = event_date;
+        const newTimeStr = start_time;
+        
+        // Check if we're actually changing the date/time
+        const existingTimeStr = existingEvent.start_time.substring(0, 5); // Get HH:MM from HH:MM:SS
+        const dateTimeChanged = (newDateStr !== existingDateStr) || (newTimeStr !== existingTimeStr);
+        
+        console.log('Date/time comparison:', {
+          newDate: newDateStr,
+          existingDate: existingDateStr,
+          newTime: newTimeStr,
+          existingTime: existingTimeStr,
+          changed: dateTimeChanged
+        });
+        
+        // If changing date/time, make sure it's not to the past
+        if (dateTimeChanged && startDateTime < now) {
           return res.status(400).json({ error: 'Cannot change event date/time to the past' });
         }
         
