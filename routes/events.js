@@ -499,9 +499,20 @@ router.put('/:id',
         const startDateTime = new Date(`${event_date}T${start_time}`);
         const now = new Date();
         
-        // Check if event starts in the past
-        if (startDateTime < now) {
-          return res.status(400).json({ error: 'Cannot update to a time in the past' });
+        // Get the existing event date properly formatted
+        const existingEvent = eventCheck.rows[0];
+        const existingDate = new Date(existingEvent.event_date);
+        const existingDateStr = existingDate.toISOString().split('T')[0];
+        const existingStartDateTime = new Date(`${existingDateStr}T${existingEvent.start_time}`);
+        
+        // Only prevent updates if trying to change the date/time to the past
+        if (startDateTime < now && (event_date !== existingDateStr || start_time !== existingEvent.start_time)) {
+          return res.status(400).json({ error: 'Cannot change event date/time to the past' });
+        }
+        
+        // Don't allow any edits to events that have already started
+        if (existingStartDateTime < now) {
+          return res.status(400).json({ error: 'Cannot edit events that have already started' });
         }
         
         // If end_date and end_time are provided, validate end is after start
