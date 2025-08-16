@@ -496,6 +496,9 @@ router.put('/:id',
 
       // Validate date/time logic
       try {
+        console.log('Validating update - event_date:', event_date, 'start_time:', start_time);
+        console.log('Existing event data:', eventCheck.rows[0].event_date, eventCheck.rows[0].start_time);
+        
         const startDateTime = new Date(`${event_date}T${start_time}`);
         const now = new Date();
         
@@ -504,6 +507,8 @@ router.put('/:id',
         const existingDate = new Date(existingEvent.event_date);
         const existingDateStr = existingDate.toISOString().split('T')[0];
         const existingStartDateTime = new Date(`${existingDateStr}T${existingEvent.start_time}`);
+        
+        console.log('Parsed dates - new:', startDateTime, 'existing:', existingStartDateTime, 'now:', now);
         
         // Only prevent updates if trying to change the date/time to the past
         if (startDateTime < now && (event_date !== existingDateStr || start_time !== existingEvent.start_time)) {
@@ -537,7 +542,12 @@ router.put('/:id',
         }
       } catch (dateError) {
         console.error('Date parsing error:', dateError);
-        return res.status(400).json({ error: 'Invalid date or time format' });
+        console.error('Date values:', { event_date, start_time, existing: eventCheck.rows[0] });
+        return res.status(400).json({ 
+          error: 'Invalid date or time format',
+          details: dateError.message,
+          values: { event_date, start_time }
+        });
       }
 
       // Update the event
