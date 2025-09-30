@@ -132,6 +132,7 @@
 }
 
 .event-title {
+  font-family: var(--font-body);
   font-weight: 700;
   line-height: 1.2;
   color: var(--dark-purple);

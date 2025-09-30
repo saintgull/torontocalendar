@@ -194,6 +194,7 @@
 }
 
 .event-title {
+  font-family: var(--font-body);
   font-weight: 500;
   color: var(--dark-purple);
   margin-bottom: 5px;
