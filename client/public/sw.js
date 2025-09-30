@@ -58,12 +58,18 @@ self.addEventListener('fetch', (event) => {
   
   // Handle API requests differently
   if (event.request.url.includes('/api/')) {
-    // For API requests, try network first, cache for offline
+    // NEVER cache POST requests or submit-event endpoint - always go to network
+    if (event.request.method === 'POST' || event.request.url.includes('/submit-event')) {
+      event.respondWith(fetch(event.request));
+      return;
+    }
+    
+    // For other API requests (GET), try network first, cache for offline
     event.respondWith(
       fetch(event.request)
         .then((response) => {
           // Only cache successful GET requests
-          if (response.status === 200) {
+          if (response.status === 200 && event.request.method === 'GET') {
             const responseClone = response.clone();
             caches.open(CACHE_NAME)
               .then((cache) => {

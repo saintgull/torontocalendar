@@ -30,7 +30,7 @@ const createTransporter = () => {
   });
 };
 
-// POST /api/submit-event - Submit event for review
+// POST /api/submit-event - Submit event for review (PUBLIC ENDPOINT - NO AUTH REQUIRED)
 router.post('/', [
   body('eventName').trim().isLength({ min: 1, max: 255 }).withMessage('Event name is required and must be under 255 characters'),
   body('submitterName').trim().isLength({ min: 1, max: 100 }).withMessage('Your name is required and must be under 100 characters'),
@@ -39,6 +39,14 @@ router.post('/', [
   body('eventDescription').trim().isLength({ min: 1, max: 2000 }).withMessage('Event description is required and must be under 2000 characters')
 ], async (req, res) => {
   try {
+    console.log('=== EVENT SUBMISSION REQUEST ===');
+    console.log('Method:', req.method);
+    console.log('URL:', req.url);
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('User-Agent:', req.headers['user-agent']);
+    console.log('Body keys:', Object.keys(req.body));
+    console.log('=================================');
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log('Validation errors:', errors.array());

@@ -29,15 +29,24 @@ const SubmitEventPage = () => {
     setLoading(true);
 
     try {
+      console.log('Submitting to:', `${config.API_BASE_URL}/api/submit-event`);
+      console.log('Form data:', formData);
+      console.log('User agent:', navigator.userAgent);
+      
       const response = await fetch(`${config.API_BASE_URL}/api/submit-event`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        cache: 'no-cache'
       });
 
       const data = await response.json();
+
+      console.log('Submit response status:', response.status);
+      console.log('Submit response data:', data);
 
       if (response.ok) {
         setSuccess(true);
@@ -49,7 +58,9 @@ const SubmitEventPage = () => {
           eventDescription: ''
         });
       } else {
-        setError(data.error || 'Failed to submit event. Please try again.');
+        console.error('Submit failed with status:', response.status);
+        console.error('Error details:', data);
+        setError(data.error || `Failed to submit event (${response.status}). Please try again.`);
       }
     } catch (error) {
       console.error('Network error:', error);
@@ -91,7 +102,16 @@ const SubmitEventPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="create-event-form">
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message">
+              {error}
+              {error.includes('token') && (
+                <div style={{ marginTop: '10px', fontSize: '0.9rem', opacity: 0.8 }}>
+                  💡 <strong>Mobile users:</strong> Try refreshing the page or using a different browser if you continue to see authentication errors.
+                </div>
+              )}
+            </div>
+          )}
           
           <div className="form-group">
             <label htmlFor="eventName">Event Name *</label>
