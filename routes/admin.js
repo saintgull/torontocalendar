@@ -110,4 +110,71 @@ router.patch('/submissions/:id/processed', requireAdmin, async (req, res) => {
   }
 });
 
+// POST /api/admin/submissions/:id/approve - Auto-approve: create event and delete submission
+router.post('/submissions/:id/approve', requireAdmin, 
+  [
+    body('event_date').isISO8601().withMessage('Valid event date is required'),
+    body('start_time').matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Valid start time is required (HH:MM)'),
+    body('end_time').optional().matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Valid end time required (HH:MM)'),
+    body('location').trim().isLength({ min: 1, max: 255 }).withMessage('Location is required and must be under 255 characters'),
+    body('link').optional().isURL().withMessage('Invalid URL format')
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const { id } = req.params;
+      const { event_date, start_time, end_time, location, link } = req.body;
+      
+      // Get the submission details
+      const submissionResult = await db.query(
+        'SELECT * FROM event_submissions WHERE id = $1',
+        [id]
+      );
+      
+      if (submissionResult.rows.length === 0) {
+        return res.status(404).json({ error: 'Submission not found' });
+      }
+      
+      const submission = submissionResult.rows[0];
+      const { getNextColor } = require('../utils/colors');
+      
+      // Create the event
+      const eventColor = getNextColor();
+      const eventResult = await db.query(
+        `INSERT INTO events (title, event_date, start_time, end_time, location, description, link, created_by, creator_name, color)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         RETURNING id`,
+        [
+          submission.event_name,
+          event_date,
+          start_time,
+          end_time || null,
+          location,
+          submission.event_description,
+          link || submission.event_link || null,
+          req.user.id,
+          req.user.display_name,
+          eventColor
+        ]
+      );
+      
+      // Delete the submission
+      await db.query('DELETE FROM event_submissions WHERE id = $1', [id]);
+      
+      res.json({ 
+        message: 'Event created successfully and submission removed',
+        event_id: eventResult.rows[0].id
+      });
+      
+    } catch (error) {
+      console.error('Error approving submission:', error);
+      res.status(500).json({ error: 'Failed to approve submission' });
+    }
+  }
+);
+
 module.exports = router;

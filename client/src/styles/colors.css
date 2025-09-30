@@ -57,7 +57,7 @@
   --header-bg: transparent;
   --calendar-bg: var(--slate-gray-light);
   --calendar-cell-bg: var(--white-smoke);
-  --calendar-cell-border: var(--dark-purple);
+  --calendar-cell-border: var(--slate-gray);
   --calendar-header: var(--paynes-gray);
   --calendar-header-text: var(--color-text-light);
   --calendar-today: var(--auburn);

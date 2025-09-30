@@ -197,7 +197,7 @@ const Calendar = () => {
     <div className="calendar-wrapper">
       <div className="calendar">
         <div className="calendar-header">
-          <button onClick={previousMonth} className="nav-button">&lt;</button>
+          <button onClick={previousMonth} className="nav-button">◀</button>
           <div className="calendar-title">
             <h2>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h2>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -221,7 +221,7 @@ const Calendar = () => {
               Download all events
             </a>
           </div>
-          <button onClick={nextMonth} className="nav-button">&gt;</button>
+          <button onClick={nextMonth} className="nav-button">▶</button>
         </div>
 
       <div className="calendar-grid">
