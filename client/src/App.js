@@ -6,6 +6,7 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Calendar from './components/Calendar';
+import InstallPrompt from './components/InstallPrompt';
 import LoginPage from './pages/LoginPage';
 import CreateEventPage from './pages/CreateEventPage';
 import EditEventPage from './pages/EditEventPage';
@@ -40,6 +41,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <InstallPrompt />
         </div>
       </Router>
     </AuthProvider>

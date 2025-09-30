@@ -1,0 +1,121 @@
+.install-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  background: var(--white-smoke);
+  border: 2px solid var(--slate-gray);
+  border-radius: 12px;
+  box-shadow: var(--shadow-heavy);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-prompt-content {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.install-prompt-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.install-prompt-text {
+  flex: 1;
+}
+
+.install-prompt-text h3 {
+  margin: 0 0 5px 0;
+  color: var(--dark-purple);
+  font-size: 1.1rem;
+  font-family: var(--font-primary);
+}
+
+.install-prompt-text p {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.install-prompt-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.install-btn, .dismiss-btn {
+  min-width: 80px;
+  max-width: 80px;
+  height: 36px;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+}
+
+.install-btn {
+  background: var(--asparagus) !important;
+  color: white !important;
+  border: 2px solid var(--asparagus) !important;
+}
+
+.install-btn:hover {
+  background: var(--asparagus-dark) !important;
+  transform: translateY(-1px);
+}
+
+.dismiss-btn {
+  background: transparent !important;
+  color: var(--slate-gray) !important;
+  border: 1px solid var(--slate-gray) !important;
+}
+
+.dismiss-btn:hover {
+  background: var(--slate-gray) !important;
+  color: white !important;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .install-prompt {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+  
+  .install-prompt-content {
+    padding: 15px;
+    gap: 12px;
+  }
+  
+  .install-prompt-text h3 {
+    font-size: 1rem;
+  }
+  
+  .install-prompt-text p {
+    font-size: 0.85rem;
+  }
+  
+  .install-btn, .dismiss-btn {
+    min-width: 70px;
+    max-width: 70px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+}

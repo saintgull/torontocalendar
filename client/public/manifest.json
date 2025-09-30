@@ -1,11 +1,13 @@
 {
   "short_name": "TO Events",
   "name": "Toronto Event Calendar",
+  "description": "Discover and explore events happening in Toronto",
   "icons": [
     {
       "src": "favicon.png",
       "sizes": "500x500",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "favicon.ico",
@@ -15,16 +17,37 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#301a4b",
-  "background_color": "#f8f9fa"
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#5d707f",
+  "background_color": "#f5f5f5",
+  "categories": ["events", "entertainment", "lifestyle"],
+  "lang": "en-US",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Submit Event",
+      "short_name": "Submit",
+      "description": "Submit a new event to the calendar",
+      "url": "/submit-event",
+      "icons": [
+        {
+          "src": "favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
