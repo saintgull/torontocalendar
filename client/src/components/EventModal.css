@@ -34,6 +34,8 @@
   font-size: 20px;
   color: #333;
   margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
 }
 
 .close-button {
