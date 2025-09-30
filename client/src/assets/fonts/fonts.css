@@ -1,3 +1,6 @@
+/* Google Fonts - Onest */
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
 /* MetaAccanthis Fonts */
 @font-face {
   font-family: 'MetaAccanthis';
@@ -10,15 +13,6 @@
 @font-face {
   font-family: 'MetaAccanthis Alternate';
   src: url('./MetaAccanthisAlternate.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Cotham Font */
-@font-face {
-  font-family: 'Cotham';
-  src: url('./CothamSans.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

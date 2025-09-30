@@ -16,8 +16,8 @@
   /* Typography */
   --font-primary: 'MetaAccanthis Alternate', serif; /* For main title */
   --font-secondary: 'MetaAccanthis', serif; /* For month titles and body text */
-  --font-subheading: 'Cotham', sans-serif; /* For subheadings */
-  --font-body: 'Cotham', sans-serif; /* For all other text */
+  --font-subheading: 'Onest', sans-serif; /* For subheadings */
+  --font-body: 'Onest', sans-serif; /* For all other text */
   
   /* Color variations */
   --dark-purple-light: #4a1449;
