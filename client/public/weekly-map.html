@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toronto Weekly Events Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-purple: #310a31;
+            --dark-purple-light: #4a1449;
+            --slate-gray: #6d8a96;
+            --slate-gray-light: #8ca6b2;
+            --white-smoke: #f5f5f5;
+            --paynes-gray: #5d707f;
+            --auburn: #a52a2a;
+            --auburn-light: #c73e3e;
+            --golden-yellow: #ffd700;
+            --asparagus: #87a96b;
+            --asparagus-dark: #6f8a51;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white-smoke);
+            color: var(--dark-purple);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            padding: 20px 24px;
+            background: var(--white-smoke);
+            border-bottom: 2px solid var(--dark-purple);
+        }
+
+        header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--auburn);
+            margin-bottom: 4px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: var(--paynes-gray);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 16px 24px;
+            background: var(--white-smoke);
+            border-bottom: 1px solid var(--slate-gray-light);
+            align-items: flex-end;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-label {
+            font-family: 'Instrument Serif', serif;
+            font-size: 0.9rem;
+            color: var(--dark-purple);
+            font-style: italic;
+        }
+
+        .day-buttons, .time-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .day-btn, .time-btn {
+            padding: 10px 16px;
+            border: 2px solid var(--slate-gray);
+            background: var(--white-smoke);
+            color: var(--dark-purple);
+            font-family: 'Onest', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .day-btn:hover, .time-btn:hover {
+            background: var(--slate-gray-light);
+            border-color: var(--slate-gray);
+            color: var(--dark-purple);
+        }
+
+        .day-btn.active {
+            background: var(--dark-purple);
+            border-color: var(--dark-purple);
+            color: white;
+        }
+
+        .time-btn.active {
+            background: var(--auburn);
+            border-color: var(--auburn);
+            color: white;
+        }
+
+        .event-count {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--paynes-gray);
+        }
+
+        .event-count strong {
+            font-family: 'Instrument Serif', serif;
+            color: var(--auburn);
+            font-size: 1.75rem;
+            font-weight: 400;
+        }
+
+        #map {
+            flex: 1;
+            min-height: 400px;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: var(--white-smoke);
+            color: var(--dark-purple);
+            border-radius: 12px;
+            padding: 0;
+            border: 2px solid var(--dark-purple);
+            box-shadow: 0 4px 12px rgba(49, 10, 49, 0.15);
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            min-width: 260px;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--white-smoke);
+            border: 2px solid var(--dark-purple);
+            border-top: none;
+            border-left: none;
+        }
+
+        .popup-content {
+            padding: 16px;
+        }
+
+        .popup-content h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--dark-purple);
+        }
+
+        .popup-content .venue {
+            font-size: 0.9rem;
+            color: var(--auburn);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .popup-content .address {
+            font-size: 0.8rem;
+            color: var(--paynes-gray);
+            margin-bottom: 10px;
+        }
+
+        .popup-content .time-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--dark-purple);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .popup-content .description {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--dark-purple);
+            line-height: 1.5;
+        }
+
+        .popup-content a {
+            color: var(--auburn);
+            text-decoration: none;
+        }
+
+        .popup-content a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 14px 24px;
+            background: var(--white-smoke);
+            border-top: 2px solid var(--dark-purple);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--paynes-gray);
+        }
+
+        footer a {
+            color: var(--auburn);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .no-events {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--white-smoke);
+            padding: 32px;
+            border-radius: 12px;
+            text-align: center;
+            z-index: 1000;
+            border: 2px solid var(--dark-purple);
+            box-shadow: 0 4px 16px rgba(49, 10, 49, 0.2);
+        }
+
+        .no-events h3 {
+            font-family: 'Instrument Serif', serif;
+            margin-bottom: 8px;
+            color: var(--dark-purple);
+            font-weight: 400;
+        }
+
+        .no-events p {
+            color: var(--paynes-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .day-btn {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+
+            .time-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+
+            .controls {
+                padding: 12px 16px;
+            }
+
+            header {
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Toronto Weekly Events</h1>
+            <p>Recurring community events happening every week</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <span class="control-label">Day</span>
+                <div class="day-buttons">
+                    <button class="day-btn" data-day="monday">Mon</button>
+                    <button class="day-btn" data-day="tuesday">Tue</button>
+                    <button class="day-btn" data-day="wednesday">Wed</button>
+                    <button class="day-btn" data-day="thursday">Thu</button>
+                    <button class="day-btn" data-day="friday">Fri</button>
+                    <button class="day-btn" data-day="saturday">Sat</button>
+                    <button class="day-btn" data-day="sunday">Sun</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <span class="control-label">Time</span>
+                <div class="time-buttons">
+                    <button class="time-btn" data-time="morning">Morning</button>
+                    <button class="time-btn" data-time="afternoon">Afternoon</button>
+                    <button class="time-btn" data-time="evening">Evening</button>
+                </div>
+            </div>
+
+            <div class="event-count">
+                <span>Showing</span>
+                <strong id="count">0</strong>
+                <span>events</span>
+            </div>
+        </div>
+
+        <div id="map"></div>
+
+        <div id="no-events-msg" class="no-events" style="display: none;">
+            <h3>No events at this time</h3>
+            <p>Try selecting a different day or time slot</p>
+        </div>
+
+        <footer>
+            <span>Data sourced from community venues and t0ronto.ca</span>
+            <a href="/about">About this project</a>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Weekly events data - all addresses verified via web search Dec 2024
+        const weeklyEvents = [
+            // MONDAY
+            {
+                name: "Tech Pizza Mondays",
+                venue: "Victory Cafe",
+                address: "440 Bloor St W, Toronto, ON M5S 1X5",
+                lat: 43.6652,
+                lng: -79.4097,
+                day: "monday",
+                timeSlot: "evening",
+                time: "6:00 PM",
+                description: "Weekly tech meetup with pizza. Meet founders, developers, and tech enthusiasts.",
+                url: "https://mondays.pizza"
+            },
+            {
+                name: "Art Bar Poetry Series",
+                venue: "Free Times Cafe",
+                address: "320 College St, Toronto, ON M5T 1S3",
+                lat: 43.6579,
+                lng: -79.4050,
+                day: "monday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Canada's longest-running poetry-only weekly reading series."
+            },
+            {
+                name: "Open Mic Night",
+                venue: "The Painted Lady",
+                address: "218 Ossington Ave, Toronto, ON M6J 2Z9",
+                lat: 43.6484,
+                lng: -79.4247,
+                day: "monday",
+                timeSlot: "evening",
+                time: "8:00 PM",
+                description: "Hosted by Kunle. Sign up at 8pm sharp. Two songs per performer, all genres welcome.",
+                url: "https://thepaintedlady.ca"
+            },
+            {
+                name: "Jazz Trios Night",
+                venue: "The Emmet Ray",
+                address: "924 College St, Toronto, ON M6H 1A4",
+                lat: 43.6543,
+                lng: -79.4270,
+                day: "monday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Live jazz trio performances at Toronto's beloved whisky bar. 230+ whiskies available.",
+                url: "https://theemmetray.com"
+            },
+            {
+                name: "Reading Rhythms Toronto",
+                venue: "Duke of York",
+                address: "39 Prince Arthur Ave, Toronto, ON M5R 1B2",
+                lat: 43.6687,
+                lng: -79.3951,
+                day: "monday",
+                timeSlot: "evening",
+                time: "7:00 - 9:00 PM",
+                description: "Social reading parties designed to make it easy for people to gather and read together."
+            },
+
+            // TUESDAY
+            {
+                name: "Civic Tech Toronto",
+                venue: "Myhal Centre (rotating)",
+                address: "55 St. George St, Toronto, ON M5S 0C9",
+                lat: 43.6603,
+                lng: -79.3968,
+                day: "tuesday",
+                timeSlot: "evening",
+                time: "6:30 PM",
+                description: "Hacknight format meetup focused on civic tech challenges. Vibrant and diverse community.",
+                url: "https://civictech.ca"
+            },
+            {
+                name: "Hacklab Open House",
+                venue: "Hacklab Toronto",
+                address: "1677 St Clair Ave W, Toronto, ON M6N 1H9",
+                lat: 43.6768,
+                lng: -79.4556,
+                day: "tuesday",
+                timeSlot: "evening",
+                time: "6:00 PM",
+                description: "Toronto's hacker collective opens their doors. Show off projects, ask for help, or help others.",
+                url: "https://hacklab.to"
+            },
+            {
+                name: "Tuesday Open Mic",
+                venue: "Free Times Cafe",
+                address: "320 College St, Toronto, ON M5T 1S3",
+                lat: 43.6579,
+                lng: -79.4050,
+                day: "tuesday",
+                timeSlot: "evening",
+                time: "6:30 PM",
+                description: "Weekly open mic night at Toronto's 45-year-old cultural institution.",
+                url: "https://freetimescafe.com"
+            },
+            {
+                name: "Open Mic Night",
+                venue: "Handlebar",
+                address: "159 Augusta Ave, Toronto, ON M5T 2L4",
+                lat: 43.6542,
+                lng: -79.4016,
+                day: "tuesday",
+                timeSlot: "evening",
+                time: "8:30 PM",
+                description: "The best open mic in town. Sign up at 8pm. In the heart of Kensington Market.",
+                url: "https://thehandlebar.ca"
+            },
+
+            // WEDNESDAY
+            {
+                name: "Punch Up Comedy",
+                venue: "The Emmet Ray",
+                address: "924 College St, Toronto, ON M6H 1A4",
+                lat: 43.6543,
+                lng: -79.4270,
+                day: "wednesday",
+                timeSlot: "evening",
+                time: "6:00 PM",
+                description: "Weekly stand-up comedy open mic. List starts at 5:30pm."
+            },
+            {
+                name: "Beyond B-SIDE Open Mic",
+                venue: "TheMix669",
+                address: "669 College St, Toronto, ON M6G 1B9",
+                lat: 43.6550,
+                lng: -79.4182,
+                day: "wednesday",
+                timeSlot: "evening",
+                time: "8:00 PM",
+                description: "The spiritual successor of the Wednesday open mic at B-Side. All genres welcome."
+            },
+
+            // THURSDAY
+            {
+                name: "Ecstatic Dance Toronto",
+                venue: "Sts Cyril & Methody Church",
+                address: "237 Sackville St, Toronto, ON M5A 3G1",
+                lat: 43.6597,
+                lng: -79.3624,
+                day: "thursday",
+                timeSlot: "evening",
+                time: "7:30 PM",
+                description: "Toronto's leading weekly Ecstatic Dance. 900+ dances since 2006. Nonverbal, barefoot, alcohol-free.",
+                url: "https://ecstaticdance.ca"
+            },
+            {
+                name: "Organic Farmers' Market",
+                venue: "Dufferin Grove Park",
+                address: "875 Dufferin St, Toronto, ON M6H 3K8",
+                lat: 43.6566,
+                lng: -79.4358,
+                day: "thursday",
+                timeSlot: "afternoon",
+                time: "3:00 - 7:00 PM",
+                description: "Toronto's oldest organic farmers' market. Year-round local and organic produce since 2002.",
+                url: "https://dufferingrovemarket.ca"
+            },
+
+            // FRIDAY
+            {
+                name: "Office Hours",
+                venue: "Victory Cafe",
+                address: "440 Bloor St W, Toronto, ON M5S 1X5",
+                lat: 43.6652,
+                lng: -79.4097,
+                day: "friday",
+                timeSlot: "evening",
+                time: "6:30 PM",
+                description: "Weekly public gathering for networking and connection. Meet interesting people from the internet.",
+                url: "https://officehours.bar"
+            },
+            {
+                name: "Jazz & Blues Night",
+                venue: "The Emmet Ray",
+                address: "924 College St, Toronto, ON M6H 1A4",
+                lat: 43.6543,
+                lng: -79.4270,
+                day: "friday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Live music every Friday at the whisky bar. Over 230 whiskies available.",
+                url: "https://theemmetray.com"
+            },
+            {
+                name: "Live Music & Comedy",
+                venue: "TRANZAC",
+                address: "292 Brunswick Ave, Toronto, ON M5S 2M7",
+                lat: 43.6647,
+                lng: -79.4082,
+                day: "friday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Not-for-profit venue with diverse music, theatre, and dance. 1400+ events per year.",
+                url: "https://tranzac.org"
+            },
+
+            // SATURDAY
+            {
+                name: "The Mindful Miles",
+                venue: "Various (starts near Eaton Centre)",
+                address: "220 Yonge St, Toronto, ON M5B 2H1",
+                lat: 43.6543,
+                lng: -79.3807,
+                day: "saturday",
+                timeSlot: "morning",
+                time: "8:00 AM",
+                description: "Walk 10k-ish steps with wandering conversations. Curious, friendly people meeting up every Saturday."
+            },
+            {
+                name: "The Joy of Writing Together",
+                venue: "Aura Concourse Shopping Mall",
+                address: "384 Yonge St, Toronto, ON M5B 1S8",
+                lat: 43.6588,
+                lng: -79.3824,
+                day: "saturday",
+                timeSlot: "morning",
+                time: "10:30 - 11:45 AM",
+                description: "Writing session in two groups (reflect or create). Follows The Mindful Miles walk."
+            },
+            {
+                name: "Farmers' Market",
+                venue: "Evergreen Brick Works",
+                address: "550 Bayview Ave, Toronto, ON M4W 3X8",
+                lat: 43.6847,
+                lng: -79.3655,
+                day: "saturday",
+                timeSlot: "morning",
+                time: "9:00 AM - 1:00 PM",
+                description: "Toronto's largest year-round farmers market. 100+ local vendors within 205km radius.",
+                url: "https://evergreen.ca"
+            },
+            {
+                name: "Farmers' Market",
+                venue: "St. Lawrence Market North",
+                address: "92-95 Front St E, Toronto, ON M5E 1C3",
+                lat: 43.6487,
+                lng: -79.3715,
+                day: "saturday",
+                timeSlot: "morning",
+                time: "5:00 AM - 3:00 PM",
+                description: "Historic market operating since 1803. Once named world's best food market by National Geographic."
+            },
+            {
+                name: "Underground Night Market",
+                venue: "Harbourfront Centre",
+                address: "235 Queens Quay W, Toronto, ON M5J 2G8",
+                lat: 43.6389,
+                lng: -79.3819,
+                day: "saturday",
+                timeSlot: "evening",
+                time: "7:00 - 11:00 PM",
+                description: "Food stalls, artisan vendors, live DJs. Free entry, food/drinks $10 or less."
+            },
+            {
+                name: "Social Game Night",
+                venue: "Snakes & Lattes Annex",
+                address: "600 Bloor St W, Toronto, ON M6G 1K4",
+                lat: 43.6647,
+                lng: -79.4139,
+                day: "saturday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Unplug, unwind, and meet new people over board games. Toronto's original board game cafe.",
+                url: "https://snakesandlattes.com"
+            },
+            {
+                name: "Live Music & Comedy",
+                venue: "TRANZAC",
+                address: "292 Brunswick Ave, Toronto, ON M5S 2M7",
+                lat: 43.6647,
+                lng: -79.4082,
+                day: "saturday",
+                timeSlot: "evening",
+                time: "Evening",
+                description: "Not-for-profit venue with diverse music, theatre, and dance.",
+                url: "https://tranzac.org"
+            },
+
+            // SUNDAY
+            {
+                name: "Shut Up & Code",
+                venue: "Au Pain Doré Bakery",
+                address: "81 Front St E, Toronto, ON M5E 1B8",
+                lat: 43.6479,
+                lng: -79.3735,
+                day: "sunday",
+                timeSlot: "morning",
+                time: "9:15 - 11:15 AM",
+                description: "Focused silent coding sessions with networking. For coders of all skill levels in a distraction-free environment."
+            },
+            {
+                name: "Sunday Contact Jam",
+                venue: "Dovercourt House",
+                address: "805 Dovercourt Rd, Toronto, ON M6H 2X4",
+                lat: 43.6614,
+                lng: -79.4319,
+                day: "sunday",
+                timeSlot: "morning",
+                time: "10:30 AM - 1:30 PM",
+                description: "Running continuously for 35+ years. Contact improvisation dance community.",
+                url: "https://torontodance.com"
+            },
+            {
+                name: "Open Mic Jam",
+                venue: "Function Bar + Kitchen",
+                address: "473 Church St, Toronto, ON M4Y 2C5",
+                lat: 43.6636,
+                lng: -79.3800,
+                day: "sunday",
+                timeSlot: "evening",
+                time: "7:00 PM",
+                description: "Collaborative space for musicians. All genres welcome from jazz to rock to hip-hop.",
+                url: "https://functionbar.ca"
+            },
+            {
+                name: "Sunday Klezmer Brunch",
+                venue: "Free Times Cafe",
+                address: "320 College St, Toronto, ON M5T 1S3",
+                lat: 43.6579,
+                lng: -79.4050,
+                day: "sunday",
+                timeSlot: "morning",
+                time: "11:00 AM",
+                description: "Live klezmer music with brunch. A Toronto tradition at the 45-year institution.",
+                url: "https://freetimescafe.com"
+            },
+            {
+                name: "Antique Market",
+                venue: "St. Lawrence Market North",
+                address: "92-95 Front St E, Toronto, ON M5E 1C3",
+                lat: 43.6487,
+                lng: -79.3715,
+                day: "sunday",
+                timeSlot: "morning",
+                time: "Dawn - 5:00 PM",
+                description: "Over 80 vendors with antiques, collectibles, and vintage finds."
+            }
+        ];
+
+        // Initialize map centered on Toronto
+        const map = L.map('map', {
+            center: [43.6570, -79.4100],
+            zoom: 13,
+            zoomControl: true
+        });
+
+        // Light map tiles (Voyager style)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Custom marker icon
+        function createMarkerIcon(color) {
+            return L.divIcon({
+                className: 'custom-marker',
+                html: `<svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 0C6.716 0 0 6.716 0 15c0 8.284 15 25 15 25s15-16.716 15-25C30 6.716 23.284 0 15 0z" fill="${color}"/>
+                    <circle cx="15" cy="14" r="6" fill="white"/>
+                </svg>`,
+                iconSize: [30, 40],
+                iconAnchor: [15, 40],
+                popupAnchor: [0, -40]
+            });
+        }
+
+        const markers = L.layerGroup().addTo(map);
+
+        // State
+        let selectedDay = null;
+        let selectedTime = null;
+
+        // Set today as default
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const today = days[new Date().getDay()];
+        const currentHour = new Date().getHours();
+        let currentTimeSlot = 'morning';
+        if (currentHour >= 14) currentTimeSlot = 'afternoon';
+        if (currentHour >= 18) currentTimeSlot = 'evening';
+
+        function updateMarkers() {
+            markers.clearLayers();
+
+            let filteredEvents = weeklyEvents;
+
+            if (selectedDay) {
+                filteredEvents = filteredEvents.filter(e => e.day === selectedDay);
+            }
+
+            if (selectedTime) {
+                filteredEvents = filteredEvents.filter(e => e.timeSlot === selectedTime);
+            }
+
+            // Update count
+            document.getElementById('count').textContent = filteredEvents.length;
+
+            // Show/hide no events message
+            document.getElementById('no-events-msg').style.display = filteredEvents.length === 0 ? 'block' : 'none';
+
+            // Color based on time slot (Toronto calendar palette)
+            const colors = {
+                morning: '#87a96b',    // asparagus (green)
+                afternoon: '#6d8a96',  // slate-gray
+                evening: '#a52a2a'     // auburn (red-brown)
+            };
+
+            filteredEvents.forEach(event => {
+                const color = colors[event.timeSlot] || '#3b82f6';
+                const marker = L.marker([event.lat, event.lng], {
+                    icon: createMarkerIcon(color)
+                });
+
+                const popupContent = `
+                    <div class="popup-content">
+                        <h3>${event.name}</h3>
+                        <div class="venue">${event.venue}</div>
+                        <div class="address">${event.address}</div>
+                        <span class="time-badge">${event.time}</span>
+                        <div class="description">${event.description}</div>
+                        ${event.url ? `<div style="margin-top: 8px;"><a href="${event.url}" target="_blank" style="color: #3b82f6; font-size: 0.8rem;">${event.url}</a></div>` : ''}
+                    </div>
+                `;
+
+                marker.bindPopup(popupContent);
+                markers.addLayer(marker);
+            });
+
+            // Fit bounds if we have markers
+            if (filteredEvents.length > 0) {
+                const group = new L.featureGroup(markers.getLayers());
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+
+        // Day button click handlers
+        document.querySelectorAll('.day-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const day = btn.dataset.day;
+
+                // Toggle selection
+                if (selectedDay === day) {
+                    selectedDay = null;
+                    btn.classList.remove('active');
+                } else {
+                    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedDay = day;
+                }
+
+                updateMarkers();
+            });
+        });
+
+        // Time button click handlers
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const time = btn.dataset.time;
+
+                // Toggle selection
+                if (selectedTime === time) {
+                    selectedTime = null;
+                    btn.classList.remove('active');
+                } else {
+                    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedTime = time;
+                }
+
+                updateMarkers();
+            });
+        });
+
+        // Initialize with today's day and current time slot selected
+        selectedDay = today;
+        selectedTime = currentTimeSlot;
+        document.querySelector(`.day-btn[data-day="${today}"]`).classList.add('active');
+        document.querySelector(`.time-btn[data-time="${currentTimeSlot}"]`).classList.add('active');
+        updateMarkers();
+    </script>
+</body>
+</html>

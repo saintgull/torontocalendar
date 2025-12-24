@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Toronto Weekly Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-purple: #310a31;
+            --slate-gray: #6d8a96;
+            --white-smoke: #f5f5f5;
+            --paynes-gray: #5d707f;
+            --auburn: #a52a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white-smoke);
+            color: var(--dark-purple);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .about-box {
+            background: var(--white-smoke);
+            border: 2px solid var(--dark-purple);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(49, 10, 49, 0.15);
+        }
+
+        h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 32px;
+            color: var(--auburn);
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--dark-purple);
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--dark-purple);
+        }
+
+        a {
+            color: var(--auburn);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
+        ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 3px solid var(--slate-gray);
+        }
+
+        li a {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .resource-description {
+            font-size: 0.9rem;
+            color: var(--paynes-gray);
+        }
+
+        .signature {
+            margin-top: 40px;
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            color: var(--paynes-gray);
+            text-align: right;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--dark-purple);
+            border: 2px solid var(--dark-purple);
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: var(--dark-purple);
+            opacity: 0.9;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .highlight {
+            color: var(--auburn);
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .about-box {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="about-box">
+            <h1>About</h1>
+
+            <p>
+                <strong class="highlight">Toronto Weekly Events</strong> is a map of recurring weekly events happening across the city.
+                Unlike one-off event calendars, this focuses on reliable, community-driven gatherings you can count on week after week.
+            </p>
+
+            <p>
+                This project was inspired by <a href="https://chrisdcalendars.notion.site/Toronto-Event-Calendar-a6a970ba10aa461fa3846a9c996ecf49" target="_blank">ChrisD's Toronto Events Calendar</a>
+                and a desire to make recurring events easier to discover. The idea: open it on any day, at any time, and see what's happening nearby.
+            </p>
+
+            <p>
+                Event submissions are curated. If you know of a weekly event that should be included, contact me (Erin Saint Gull)
+                on Twitter or any other platform. Especially if you're someone in the Friendly Ambitious Nerds, TPOT, tech, or meditation communities.
+            </p>
+
+            <h2>Other Toronto Event Resources</h2>
+
+            <ul>
+                <li>
+                    <a href="https://www.makeworld.space/garden/Toronto%20Events.html" target="_blank">makeworld.space/garden/Toronto Events</a>
+                    <span class="resource-description">A repository of event aggregators and calendar with location recommendations</span>
+                </li>
+                <li>
+                    <a href="https://torontoeventgenerator.substack.com/" target="_blank">Toronto Event Generator</a>
+                    <span class="resource-description">Newsletter by Misha Glouberman, Toronto's best super-connector</span>
+                </li>
+                <li>
+                    <a href="https://notes.justagwailo.com/toronto/events" target="_blank">Richard Eriksson's Guide</a>
+                    <span class="resource-description">Guide on finding events in Toronto (VP of Tech Pizza Mondays)</span>
+                </li>
+                <li>
+                    <a href="https://showuptoronto.ca/" target="_blank">Show Up Toronto</a>
+                    <span class="resource-description">Political organization and mutual aid events calendar</span>
+                </li>
+                <li>
+                    <a href="https://weavetoronto.notion.site/" target="_blank">Weave Toronto</a>
+                    <span class="resource-description">An improvised college campus with courses, events, and community focus</span>
+                </li>
+                <li>
+                    <a href="https://t0ronto.ca" target="_blank">t0ronto.ca</a>
+                    <span class="resource-description">Community wiki and directory of Toronto organizations, events, and places</span>
+                </li>
+            </ul>
+
+            <p>
+                Many thanks to the Toronto event organizers of many kinds. Thank you for making this city so vibrant :)
+            </p>
+
+            <p class="signature">
+                Have fun,<br><br>
+                Erin
+            </p>
+
+            <a href="/weekly-map.html" class="back-link">← Back to Map</a>
+        </div>
+    </div>
+</body>
+</html>
