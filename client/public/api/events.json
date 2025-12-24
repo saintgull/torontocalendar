@@ -9,8 +9,8 @@
       "website": "https://curate.beauty"
     },
     "license": "CC BY 4.0",
-    "generated": "2024-12-24T00:00:00Z",
-    "count": 45
+    "generated": "2024-12-24T12:00:00Z",
+    "count": 52
   },
   "events": [
     {
@@ -122,6 +122,18 @@
       "tags": ["jazz", "music", "bar"]
     },
     {
+      "name": "Headscratchers Trivia",
+      "venue": "Stout Irish Pub",
+      "address": "221 Carlton St, Toronto, ON M5A 2L2",
+      "coordinates": { "lat": 43.6621, "lng": -79.3667 },
+      "day": "monday",
+      "timeSlot": "evening",
+      "time": "7:30 PM",
+      "description": "Weekly trivia night at Toronto's top beer bar in Cabbagetown. Reservations required.",
+      "url": "https://www.stoutirishpub.ca",
+      "tags": ["trivia", "pub", "cabbagetown"]
+    },
+    {
       "name": "Civic Tech Toronto",
       "venue": "Myhal Centre (rotating)",
       "address": "55 St. George St, Toronto, ON M5S 0C9",
@@ -218,6 +230,30 @@
       "tags": ["trivia", "games", "board-games"]
     },
     {
+      "name": "Headscratchers Trivia",
+      "venue": "Stout Irish Pub",
+      "address": "221 Carlton St, Toronto, ON M5A 2L2",
+      "coordinates": { "lat": 43.6621, "lng": -79.3667 },
+      "day": "tuesday",
+      "timeSlot": "evening",
+      "time": "7:30 PM",
+      "description": "Weekly trivia night at Toronto's top beer bar in Cabbagetown. Reservations required.",
+      "url": "https://www.stoutirishpub.ca",
+      "tags": ["trivia", "pub", "cabbagetown"]
+    },
+    {
+      "name": "Trivia Night",
+      "venue": "The Corner Place",
+      "address": "11 Jarvis St, Toronto, ON M5E 1Z9",
+      "coordinates": { "lat": 43.6476, "lng": -79.3719 },
+      "day": "tuesday",
+      "timeSlot": "evening",
+      "time": "7:00 PM",
+      "description": "Weekly trivia with rotating drink specials. $50 bar tab for first place.",
+      "url": "https://www.thecornerplace.ca",
+      "tags": ["trivia", "pub", "st-lawrence"]
+    },
+    {
       "name": "Punch Up Comedy",
       "venue": "The Emmet Ray",
       "address": "924 College St, Toronto, ON M6H 1A4",
@@ -288,6 +324,18 @@
       "description": "One of the harder trivia nights in the city. $5 to play, winning table gets $100 gift card.",
       "url": "https://thedrake.ca",
       "tags": ["trivia", "pub", "parkdale"]
+    },
+    {
+      "name": "Brass Facts Trivia",
+      "venue": "Left Field Brewery",
+      "address": "40 Hanna Ave, Unit G1, Toronto, ON M6K 0C3",
+      "coordinates": { "lat": 43.6380, "lng": -79.4195 },
+      "day": "wednesday",
+      "timeSlot": "evening",
+      "time": "8:00 - 10:00 PM",
+      "description": "Traditional pub-style trivia at Liberty Village craft brewery. Audio/visual questions.",
+      "url": "https://www.leftfieldbrewery.ca",
+      "tags": ["trivia", "brewery", "liberty-village"]
     },
     {
       "name": "Ecstatic Dance Toronto",
@@ -398,6 +446,18 @@
       "tags": ["salsa", "bachata", "dance"]
     },
     {
+      "name": "Salsa Fridays",
+      "venue": "Lula Lounge",
+      "address": "1585 Dundas St W, Toronto, ON M6K 1T9",
+      "coordinates": { "lat": 43.6501, "lng": -79.4399 },
+      "day": "friday",
+      "timeSlot": "evening",
+      "time": "7:00 PM - 2:00 AM",
+      "description": "Latin night with tropical dinner, cocktails, and live bands. Free dance lessons.",
+      "url": "https://www.lula.ca",
+      "tags": ["salsa", "bachata", "dance"]
+    },
+    {
       "name": "The Mindful Miles",
       "venue": "Various (starts near Eaton Centre)",
       "address": "220 Yonge St, Toronto, ON M5B 2H1",
@@ -482,6 +542,18 @@
       "tags": ["music", "comedy", "arts"]
     },
     {
+      "name": "Salsa Saturdays",
+      "venue": "Lula Lounge",
+      "address": "1585 Dundas St W, Toronto, ON M6K 1T9",
+      "coordinates": { "lat": 43.6501, "lng": -79.4399 },
+      "day": "saturday",
+      "timeSlot": "evening",
+      "time": "7:00 PM - 2:00 AM",
+      "description": "Latin night with tropical dinner, cocktails, and live bands. Free dance lessons.",
+      "url": "https://www.lula.ca",
+      "tags": ["salsa", "bachata", "dance"]
+    },
+    {
       "name": "Shut Up & Code",
       "venue": "Au Pain Doré Bakery",
       "address": "81 Front St E, Toronto, ON M5E 1B8",
@@ -552,6 +624,18 @@
       "description": "Over 80 vendors with antiques, collectibles, and vintage finds.",
       "url": null,
       "tags": ["market", "antiques", "vintage"]
+    },
+    {
+      "name": "Sunday Trivia",
+      "venue": "The Ossington",
+      "address": "61 Ossington Ave, Toronto, ON M6J 2Y9",
+      "coordinates": { "lat": 43.6460, "lng": -79.4234 },
+      "day": "sunday",
+      "timeSlot": "evening",
+      "time": "7:30 PM",
+      "description": "Weekly trivia covering culture, history, science. Prizes include drinks and bar tabs.",
+      "url": "http://www.theossington.com",
+      "tags": ["trivia", "pub", "ossington"]
     }
   ]
 }
