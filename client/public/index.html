@@ -34,6 +34,7 @@
             background: var(--white-smoke);
             color: var(--dark-purple);
             line-height: 1.6;
+            font-size: 14px;
         }
 
         .container {
@@ -50,89 +51,124 @@
 
         header h1 {
             font-family: 'Instrument Serif', serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 400;
             color: var(--auburn);
             margin-bottom: 4px;
         }
 
         header p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--paynes-gray);
         }
 
         .controls {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 16px 24px;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 24px;
             background: var(--white-smoke);
             border-bottom: 1px solid var(--slate-gray-light);
-            align-items: flex-end;
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .slider-container {
+            width: 100%;
         }
 
-        .control-label {
+        .slider-label {
             font-family: 'Instrument Serif', serif;
-            font-size: 0.9rem;
+            font-size: 1.5rem;
             color: var(--dark-purple);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .slider-label .day {
+            color: var(--auburn);
+        }
+
+        .slider-label .time {
             font-style: italic;
+            color: var(--paynes-gray);
         }
 
-        .day-buttons, .time-buttons {
-            display: flex;
-            gap: 6px;
-        }
-
-        .day-btn, .time-btn {
-            padding: 10px 16px;
-            border: 2px solid var(--slate-gray);
-            background: var(--white-smoke);
-            color: var(--dark-purple);
-            font-family: 'Onest', sans-serif;
-            font-size: 0.875rem;
-            font-weight: 500;
+        .time-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right,
+                var(--asparagus) 0%, var(--asparagus) 14.28%,
+                var(--slate-gray) 14.28%, var(--slate-gray) 28.57%,
+                var(--auburn) 28.57%, var(--auburn) 42.85%,
+                var(--asparagus) 42.85%, var(--asparagus) 57.14%,
+                var(--slate-gray) 57.14%, var(--slate-gray) 71.42%,
+                var(--auburn) 71.42%, var(--auburn) 85.71%,
+                var(--asparagus) 85.71%, var(--asparagus) 100%
+            );
+            border-radius: 4px;
+            outline: none;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 8px;
         }
 
-        .day-btn:hover, .time-btn:hover {
-            background: var(--slate-gray-light);
-            border-color: var(--slate-gray);
-            color: var(--dark-purple);
-        }
-
-        .day-btn.active {
+        .time-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
             background: var(--dark-purple);
-            border-color: var(--dark-purple);
-            color: white;
+            border: 3px solid var(--white-smoke);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(49, 10, 49, 0.3);
+            transition: transform 0.15s ease;
         }
 
-        .time-btn.active {
-            background: var(--auburn);
-            border-color: var(--auburn);
-            color: white;
+        .time-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .time-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--dark-purple);
+            border: 3px solid var(--white-smoke);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(49, 10, 49, 0.3);
+        }
+
+        .slider-ticks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: var(--paynes-gray);
+        }
+
+        .slider-ticks span {
+            text-align: center;
+            width: 40px;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .event-count {
-            margin-left: auto;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--paynes-gray);
         }
 
         .event-count strong {
             font-family: 'Instrument Serif', serif;
             color: var(--auburn);
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 400;
         }
 
@@ -168,21 +204,21 @@
 
         .popup-content h3 {
             font-family: 'Instrument Serif', serif;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 400;
             margin-bottom: 8px;
             color: var(--dark-purple);
         }
 
         .popup-content .venue {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--auburn);
             font-weight: 600;
             margin-bottom: 4px;
         }
 
         .popup-content .address {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--paynes-gray);
             margin-bottom: 10px;
         }
@@ -193,13 +229,13 @@
             background: var(--dark-purple);
             color: white;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
         .popup-content .description {
             margin-top: 10px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--dark-purple);
             line-height: 1.5;
         }
@@ -220,8 +256,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--paynes-gray);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         footer a {
@@ -232,6 +270,11 @@
 
         footer a:hover {
             text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
         }
 
         .no-events {
@@ -253,34 +296,42 @@
             margin-bottom: 8px;
             color: var(--dark-purple);
             font-weight: 400;
+            font-size: 1.5rem;
         }
 
         .no-events p {
             color: var(--paynes-gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         @media (max-width: 640px) {
             header h1 {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
 
-            .day-btn {
-                padding: 8px 10px;
-                font-size: 0.75rem;
-            }
-
-            .time-btn {
-                padding: 8px 12px;
-                font-size: 0.75rem;
+            .slider-label {
+                font-size: 1.25rem;
             }
 
             .controls {
-                padding: 12px 16px;
+                padding: 16px;
             }
 
             header {
                 padding: 14px 16px;
+            }
+
+            .slider-ticks {
+                font-size: 0.6rem;
+            }
+
+            .slider-ticks span {
+                width: 30px;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -293,32 +344,27 @@
         </header>
 
         <div class="controls">
-            <div class="control-group">
-                <span class="control-label">Day</span>
-                <div class="day-buttons">
-                    <button class="day-btn" data-day="monday">Mon</button>
-                    <button class="day-btn" data-day="tuesday">Tue</button>
-                    <button class="day-btn" data-day="wednesday">Wed</button>
-                    <button class="day-btn" data-day="thursday">Thu</button>
-                    <button class="day-btn" data-day="friday">Fri</button>
-                    <button class="day-btn" data-day="saturday">Sat</button>
-                    <button class="day-btn" data-day="sunday">Sun</button>
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span class="day" id="current-day">Monday</span> <span class="time" id="current-time">Morning</span>
+                </div>
+                <input type="range" min="0" max="20" value="0" class="time-slider" id="time-slider">
+                <div class="slider-ticks">
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                    <span>Sun</span>
                 </div>
             </div>
-
-            <div class="control-group">
-                <span class="control-label">Time</span>
-                <div class="time-buttons">
-                    <button class="time-btn" data-time="morning">Morning</button>
-                    <button class="time-btn" data-time="afternoon">Afternoon</button>
-                    <button class="time-btn" data-time="evening">Evening</button>
+            <div class="controls-row">
+                <div class="event-count">
+                    <span>Showing</span>
+                    <strong id="count">0</strong>
+                    <span>events</span>
                 </div>
-            </div>
-
-            <div class="event-count">
-                <span>Showing</span>
-                <strong id="count">0</strong>
-                <span>events</span>
             </div>
         </div>
 
@@ -326,12 +372,15 @@
 
         <div id="no-events-msg" class="no-events" style="display: none;">
             <h3>No events at this time</h3>
-            <p>Try selecting a different day or time slot</p>
+            <p>Try sliding to a different day or time</p>
         </div>
 
         <footer>
-            <span>Data sourced from community venues and <a href="https://t0ronto.ca" target="_blank">t0ronto.ca</a> · Made by <a href="https://x.com/earnestpost" target="_blank">Erin Saint Gull</a> · <a href="https://curate.beauty" target="_blank">curate.beauty</a></span>
-            <a href="/about.html">About</a>
+            <span>Data from <a href="https://t0ronto.ca" target="_blank">t0ronto.ca</a> · Made by <a href="https://x.com/earnestpost" target="_blank">Erin Saint Gull</a> · <a href="https://curate.beauty" target="_blank">curate.beauty</a></span>
+            <div class="footer-links">
+                <a href="/old-calendar.html">Old layout</a>
+                <a href="/about.html">About</a>
+            </div>
         </footer>
     </div>
 
@@ -680,6 +729,31 @@
             }
         ];
 
+        // Slider configuration: 21 positions (7 days × 3 time slots)
+        const sliderConfig = [
+            { day: 'monday', time: 'morning', label: 'Monday', timeLabel: 'Morning' },
+            { day: 'monday', time: 'afternoon', label: 'Monday', timeLabel: 'Afternoon' },
+            { day: 'monday', time: 'evening', label: 'Monday', timeLabel: 'Evening' },
+            { day: 'tuesday', time: 'morning', label: 'Tuesday', timeLabel: 'Morning' },
+            { day: 'tuesday', time: 'afternoon', label: 'Tuesday', timeLabel: 'Afternoon' },
+            { day: 'tuesday', time: 'evening', label: 'Tuesday', timeLabel: 'Evening' },
+            { day: 'wednesday', time: 'morning', label: 'Wednesday', timeLabel: 'Morning' },
+            { day: 'wednesday', time: 'afternoon', label: 'Wednesday', timeLabel: 'Afternoon' },
+            { day: 'wednesday', time: 'evening', label: 'Wednesday', timeLabel: 'Evening' },
+            { day: 'thursday', time: 'morning', label: 'Thursday', timeLabel: 'Morning' },
+            { day: 'thursday', time: 'afternoon', label: 'Thursday', timeLabel: 'Afternoon' },
+            { day: 'thursday', time: 'evening', label: 'Thursday', timeLabel: 'Evening' },
+            { day: 'friday', time: 'morning', label: 'Friday', timeLabel: 'Morning' },
+            { day: 'friday', time: 'afternoon', label: 'Friday', timeLabel: 'Afternoon' },
+            { day: 'friday', time: 'evening', label: 'Friday', timeLabel: 'Evening' },
+            { day: 'saturday', time: 'morning', label: 'Saturday', timeLabel: 'Morning' },
+            { day: 'saturday', time: 'afternoon', label: 'Saturday', timeLabel: 'Afternoon' },
+            { day: 'saturday', time: 'evening', label: 'Saturday', timeLabel: 'Evening' },
+            { day: 'sunday', time: 'morning', label: 'Sunday', timeLabel: 'Morning' },
+            { day: 'sunday', time: 'afternoon', label: 'Sunday', timeLabel: 'Afternoon' },
+            { day: 'sunday', time: 'evening', label: 'Sunday', timeLabel: 'Evening' }
+        ];
+
         // Initialize map centered on Toronto
         const map = L.map('map', {
             center: [43.6570, -79.4100],
@@ -710,30 +784,32 @@
 
         const markers = L.layerGroup().addTo(map);
 
-        // State
-        let selectedDay = null;
-        let selectedTime = null;
+        // Get current slider position based on current day/time
+        function getCurrentSliderPosition() {
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const today = days[new Date().getDay()];
+            const currentHour = new Date().getHours();
+            let currentTimeSlot = 'morning';
+            if (currentHour >= 14) currentTimeSlot = 'afternoon';
+            if (currentHour >= 18) currentTimeSlot = 'evening';
 
-        // Set today as default
-        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        const today = days[new Date().getDay()];
-        const currentHour = new Date().getHours();
-        let currentTimeSlot = 'morning';
-        if (currentHour >= 14) currentTimeSlot = 'afternoon';
-        if (currentHour >= 18) currentTimeSlot = 'evening';
+            return sliderConfig.findIndex(s => s.day === today && s.time === currentTimeSlot);
+        }
 
-        function updateMarkers() {
+        function updateMarkers(sliderValue) {
             markers.clearLayers();
 
-            let filteredEvents = weeklyEvents;
+            const config = sliderConfig[sliderValue];
+            const selectedDay = config.day;
+            const selectedTime = config.time;
 
-            if (selectedDay) {
-                filteredEvents = filteredEvents.filter(e => e.day === selectedDay);
-            }
+            // Update label
+            document.getElementById('current-day').textContent = config.label;
+            document.getElementById('current-time').textContent = config.timeLabel;
 
-            if (selectedTime) {
-                filteredEvents = filteredEvents.filter(e => e.timeSlot === selectedTime);
-            }
+            let filteredEvents = weeklyEvents.filter(e =>
+                e.day === selectedDay && e.timeSlot === selectedTime
+            );
 
             // Update count
             document.getElementById('count').textContent = filteredEvents.length;
@@ -749,7 +825,7 @@
             };
 
             filteredEvents.forEach(event => {
-                const color = colors[event.timeSlot] || '#3b82f6';
+                const color = colors[event.timeSlot] || '#6d8a96';
                 const marker = L.marker([event.lat, event.lng], {
                     icon: createMarkerIcon(color)
                 });
@@ -761,7 +837,7 @@
                         <div class="address">${event.address}</div>
                         <span class="time-badge">${event.time}</span>
                         <div class="description">${event.description}</div>
-                        ${event.url ? `<div style="margin-top: 8px;"><a href="${event.url}" target="_blank" style="color: #3b82f6; font-size: 0.8rem;">${event.url}</a></div>` : ''}
+                        ${event.url ? `<div style="margin-top: 8px;"><a href="${event.url}" target="_blank" style="color: var(--auburn); font-size: 0.75rem;">${event.url}</a></div>` : ''}
                     </div>
                 `;
 
@@ -776,50 +852,16 @@
             }
         }
 
-        // Day button click handlers
-        document.querySelectorAll('.day-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const day = btn.dataset.day;
-
-                // Toggle selection
-                if (selectedDay === day) {
-                    selectedDay = null;
-                    btn.classList.remove('active');
-                } else {
-                    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedDay = day;
-                }
-
-                updateMarkers();
-            });
+        // Slider event handler
+        const slider = document.getElementById('time-slider');
+        slider.addEventListener('input', (e) => {
+            updateMarkers(parseInt(e.target.value));
         });
 
-        // Time button click handlers
-        document.querySelectorAll('.time-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const time = btn.dataset.time;
-
-                // Toggle selection
-                if (selectedTime === time) {
-                    selectedTime = null;
-                    btn.classList.remove('active');
-                } else {
-                    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedTime = time;
-                }
-
-                updateMarkers();
-            });
-        });
-
-        // Initialize with today's day and current time slot selected
-        selectedDay = today;
-        selectedTime = currentTimeSlot;
-        document.querySelector(`.day-btn[data-day="${today}"]`).classList.add('active');
-        document.querySelector(`.time-btn[data-time="${currentTimeSlot}"]`).classList.add('active');
-        updateMarkers();
+        // Initialize with current day/time
+        const initialPosition = getCurrentSliderPosition();
+        slider.value = initialPosition >= 0 ? initialPosition : 0;
+        updateMarkers(slider.value);
     </script>
 </body>
 </html>
