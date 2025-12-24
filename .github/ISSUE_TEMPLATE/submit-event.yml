@@ -1,0 +1,131 @@
+name: Submit a Weekly Event
+description: Suggest a recurring weekly event to be added to the Toronto Weekly Events map
+title: "[Event] "
+labels: ["event-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting a weekly event! Please fill out the details below.
+
+        **Note:** This calendar focuses on **recurring weekly events** - things that happen every week on the same day. One-off events won't be added.
+
+  - type: input
+    id: event-name
+    attributes:
+      label: Event Name
+      description: What is the event called?
+      placeholder: "e.g., Monday Trivia Night"
+    validations:
+      required: true
+
+  - type: input
+    id: venue
+    attributes:
+      label: Venue Name
+      description: Where does this event take place?
+      placeholder: "e.g., The Drake Hotel"
+    validations:
+      required: true
+
+  - type: input
+    id: address
+    attributes:
+      label: Address
+      description: Full street address in Toronto
+      placeholder: "e.g., 1150 Queen St W, Toronto, ON"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: day
+    attributes:
+      label: Day of Week
+      description: Which day does this event happen?
+      options:
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+        - Sunday
+    validations:
+      required: true
+
+  - type: input
+    id: time
+    attributes:
+      label: Time
+      description: What time does the event start/run?
+      placeholder: "e.g., 7:00 PM or 7:00 - 10:00 PM"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: time-slot
+    attributes:
+      label: Time of Day
+      description: When during the day does this event happen?
+      options:
+        - Morning (before noon)
+        - Afternoon (noon to 5pm)
+        - Evening (after 5pm)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Brief description of the event (1-2 sentences)
+      placeholder: "What happens at this event? Who is it for?"
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Website or Social Link
+      description: URL for more information (optional)
+      placeholder: "https://..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of event is this?
+      options:
+        - Music / Open Mic
+        - Trivia / Games
+        - Dance
+        - Tech / Networking
+        - Arts / Creative
+        - Food / Market
+        - Sports / Fitness
+        - Social / Community
+        - Comedy
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Info
+      description: Anything else we should know? (cost, age restrictions, etc.)
+      placeholder: "e.g., Free entry, 19+, BYOB, etc."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: This is a recurring weekly event (happens every week on the same day)
+          required: true
+        - label: This event is currently active (not cancelled or seasonal-only)
+          required: true

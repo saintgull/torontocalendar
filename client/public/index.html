@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toronto Weekly Events Map</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F4Z2W66QBB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F4Z2W66QBB');
+    </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -378,7 +386,8 @@
         <footer>
             <span>Data from <a href="https://t0ronto.ca" target="_blank">t0ronto.ca</a> · Made by <a href="https://x.com/earnestpost" target="_blank">Erin Saint Gull</a> · <a href="https://curate.beauty" target="_blank">curate.beauty</a></span>
             <div class="footer-links">
-                <a href="/old-calendar.html">Old layout</a>
+                <a href="https://github.com/saintgull/torontocalendar/issues/new?template=submit-event.yml" target="_blank">Submit Event</a>
+                <a href="/api/events.json" target="_blank">API</a>
                 <a href="/about.html">About</a>
             </div>
         </footer>
